@@ -5,19 +5,20 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Category from './pages/Category'
 import Product from './pages/Product'
 import Comparison from './pages/Comparison'
+import AdminRoutes from './routes/AdminRoutes'
 
 function App() {
 
   return (
       <>
       <BrowserRouter>
-      <Routes>
+        <Routes>
           <Route path='/' element={<Home />}/>
           <Route path='/categories/:category' element={<Category />} />
           <Route path='/products/:product' element={<Product />} />
           <Route path='/comparison' element={<Comparison />} />
-      </Routes>
-       
+          <Route path="/admin/*" element={<AdminRoutes />} />
+        </Routes>
         <FooterNavigation />
       </BrowserRouter>
       </>

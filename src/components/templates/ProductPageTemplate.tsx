@@ -39,10 +39,13 @@ const ProductPageTemplate: React.FC = () => {
 
             {/* Other sections will be added later */}
 
+            {/* product's available images slider */}
             <CustomCarousel data={carousalData}/>
 
+            {/* product's last 6 days price list */}
             <DateWisePriceList/>
 
+            {/* product's price chart based on last 6 days price fluctuations */}
             <LineChart/>
         </div>
     );
