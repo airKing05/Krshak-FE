@@ -1,55 +1,64 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import LabeledInput from "../molecules/LabeledInput";
+import SelectWithLabel from "../molecules/SelectWithLabel";
+import Button from "../atoms/Button";
+import { createProduct, getAllCategories } from "../../services/adminService";
+import Text from "../atoms/Text";
+
+type Category = {
+  _id: string;
+  name: string;
+};
 
 const ProductForm = () => {
   const [name, setName] = useState("");
   const [categoryId, setCategoryId] = useState("");
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState<Category[]>([]);
 
+  const getCategoriesList = async () => {
+    const res = await getAllCategories()
+    setCategories(res);
+  }
   useEffect(() => {
-    axios.get("http://localhost:5001/api/v1/categories").then((res) => setCategories(res.data));
+    getCategoriesList();
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await axios.post("http://localhost:5001/api/v1/products", { name, categoryId });
+    await createProduct({ name, categoryId });
     setName("");
     setCategoryId("");
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow">
-      <h2 className="text-lg font-semibold mb-4">Add Product</h2>
-      <LabeledInput
-        label="Product Name"
-        name="name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
+    <form onSubmit={handleSubmit} className="bg-white p-6 rounded-2xl shadow-md max-w-md mx-auto">
+      <Text 
+        variant="h3"
+        className="text-xl font-semibold text-gray-800 mb-6"
+      >
+        Add Product
+      </Text>
 
-      <div className="mb-4">
-        <label className="block text-gray-700 mb-1">Select Category</label>
-        <select
-          className="w-full border px-4 py-2 rounded"
+      <div className="space-y-4">
+        <LabeledInput
+          label="Product Name"
+          name="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+
+        <SelectWithLabel
+          label="Select Category"
+          name="category"
           value={categoryId}
           onChange={(e) => setCategoryId(e.target.value)}
-        >
-          <option value="">-- Select Category --</option>
-          {categories.map((cat) => (
-            <option key={cat._id} value={cat._id}>
-              {cat.name}
-            </option>
-          ))}
-        </select>
+          options={categories.map((cat) => ({ label: cat.name, value: cat._id }))}
+        />
       </div>
-
-      <button
+      <Button
         type="submit"
-        className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-      >
-        Submit
-      </button>
+        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded transition-all duration-200"
+      >Submit</Button>
     </form>
   );
 };

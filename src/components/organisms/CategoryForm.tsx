@@ -1,32 +1,41 @@
 import React, { useState } from "react";
-import axios from "axios";
-import LabeledInput from "../molecules/LabeledInput";
+import InputWithLabel from "../molecules/InputWithLabel";
+import Button from "../atoms/Button";
+import { createCategory } from "../../services/adminService";
+import Text from "../atoms/Text";
 
 const CategoryForm = () => {
   const [name, setName] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await axios.post("http://localhost:5001/api/v1/categories", { name });
+    await createCategory({ name });
     setName("");
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow">
-      <h2 className="text-lg font-semibold mb-4">Add Category</h2>
-      <LabeledInput
-        label="Category Name"
-        name="name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <button
-        type="submit"
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+    <div className="bg-white max-w-md mx-auto rounded-xl shadow-md p-6">
+      <Text 
+        variant="h3"
+        className="text-xl font-semibold text-gray-800 mb-6"
       >
-        Submit
-      </button>
-    </form>
+        Add New Category
+      </Text>
+
+      <form onSubmit={handleSubmit} className="space-y-5">
+        <InputWithLabel
+          label="Category Name"
+          name="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Enter category name"
+        />
+        <Button
+          type="submit"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded transition-all duration-200"
+        >Submit</Button>
+      </form>
+    </div>
   );
 };
 
