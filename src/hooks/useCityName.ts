@@ -16,7 +16,7 @@ export function useCityName(): string | null {
         );
 
         const { latitude, longitude } = position.coords;
-        console.log('Coordinates:', latitude, longitude); // Debugging
+        // console.log('Coordinates:', latitude, longitude); // Debugging
 
         // 2. Fetch city from LocationIQ
         const token = 'pk.372bc1e88593d5294bb0ebfae6ba67aa';
@@ -30,7 +30,7 @@ export function useCityName(): string | null {
         }
 
         const data = await res.json();
-        console.log('Reverse geocode data:', data); // Debugging
+        // console.log('Reverse geocode data:', data); // Debugging
 
         const resolvedCity =
           data.address.city ||

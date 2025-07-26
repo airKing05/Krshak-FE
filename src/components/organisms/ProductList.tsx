@@ -1,20 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Card from "../molecules/Card";
 import { useNavigate } from "react-router-dom";
 
-const ProductList: React.FC = () => {
-    const [products, setProducts] = useState([
-        { id: 1, imageUrl: "https://5.imimg.com/data5/ST/QW/MY-38700875/fresh-wheat-crop.jpg", name: "Product A1", category: "Electronics", maxPrice: "1200" },
-        { id: 2, imageUrl: "https://gachwala.in/wp-content/uploads/2023/02/WHEAT.jpg", name: "Product B2", category: "Furniture", maxPrice: "8000" },
-        { id: 3, imageUrl: "https://5.imimg.com/data5/ST/QW/MY-38700875/fresh-wheat-crop.jpg", name: "Product A3", category: "Electronics", maxPrice: "1200" },
-        { id: 4, imageUrl: "https://gachwala.in/wp-content/uploads/2023/02/WHEAT.jpg", name: "Product B4", category: "Furniture", maxPrice: "8000" },
-        { id: 5, imageUrl: "https://5.imimg.com/data5/ST/QW/MY-38700875/fresh-wheat-crop.jpg", name: "Product A5", category: "Electronics", maxPrice: "1200" },
-        { id: 6, imageUrl: "https://gachwala.in/wp-content/uploads/2023/02/WHEAT.jpg", name: "Product B6", category: "Furniture", maxPrice: "8000" },
-        { id: 7, imageUrl: "https://5.imimg.com/data5/ST/QW/MY-38700875/fresh-wheat-crop.jpg", name: "Product A7", category: "Electronics", maxPrice: "1200" },
-        { id: 8, imageUrl: "https://gachwala.in/wp-content/uploads/2023/02/WHEAT.jpg", name: "Product B8", category: "Furniture", maxPrice: "8000" },
-        // Load More...
-    ]);
+
+const productsImages = {
+    "lokwan": 'https://5.imimg.com/data5/ST/QW/MY-38700875/fresh-wheat-crop.jpg',
+    "lamaba gehu": 'https://5.imimg.com/data5/ST/QW/MY-38700875/fresh-wheat-crop.jpg',
+    "piddi": 'https://gachwala.in/wp-content/uploads/2023/02/WHEAT.jpg',
+    "4037" : 'https://5.imimg.com/data5/ST/QW/MY-38700875/fresh-wheat-crop.jpg'
+};
+
+const ProductList: React.FC = ({productsList}) => {
+    const [products, setProducts] = useState([...productsList]);
+    console.log("productsList....", products)
+   // we have data still it is not able to render on first time load 
+
+    useEffect(() => {
+        setProducts([...productsList])
+    }, [productsList]) 
 
     const navigate = useNavigate();
 
@@ -22,7 +26,16 @@ const ProductList: React.FC = () => {
         setTimeout(() => {
             setProducts((prev) => [
                 ...prev,
-                { id: prev.length + 1, imageUrl: "product3.jpg", name: "New Product", category: "Appliances", maxPrice: "3000" },
+                {
+                  category: {
+                    name:  "gehu",
+                    _id: "68825af9b3d068cc2b8e2ba3"
+                  },
+                  latestMaxPrice: 2800,
+                  marketId: "68839617d93a5d7d8bb59dd7",
+                  name: '4037',
+                  _id: "688262eb1b65ac84ede76259"
+                }
             ]);
         }, 1000);
     };
@@ -36,12 +49,12 @@ const ProductList: React.FC = () => {
             <div className="space-y-3">
                 {products.map((item) => (
                     <Card 
-                    key={item.id} 
-                    imageUrl={item.imageUrl} 
-                    title={item.name} 
-                    subtitle={item.category} 
-                    maxPrice={item.maxPrice} 
-                    showWishButton
+                        key={item._id} 
+                        imageUrl={productsImages[item.name]} 
+                        title={item.name} 
+                        subtitle={item.category.name} 
+                        maxPrice={item.latestMaxPrice} 
+                        showWishButton
                         handleClick={() => handleProductClicked(item.name)}
                     />
                 ))}
