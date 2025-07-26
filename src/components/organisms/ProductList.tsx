@@ -40,8 +40,8 @@ const ProductList: React.FC = ({productsList}) => {
         }, 1000);
     };
 
-    const handleProductClicked = (product: string) => {
-        navigate(`/products/${product}`);
+    const handleProductClicked = (productId: string) => {
+        navigate(`/products/${productId}`);
     }
 
     return (
@@ -55,7 +55,7 @@ const ProductList: React.FC = ({productsList}) => {
                         subtitle={item.category.name} 
                         maxPrice={item.latestMaxPrice} 
                         showWishButton
-                        handleClick={() => handleProductClicked(item.name)}
+                        handleClick={() => handleProductClicked(item._id)}
                     />
                 ))}
             </div>

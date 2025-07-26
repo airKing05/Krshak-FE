@@ -7,7 +7,7 @@ export interface PriceDataTypes {
     minPrice: string;
     maxPrice: string;
 }
-const DateWisePriceList: React.FC = () => {
+const DateWisePriceList: React.FC = ({price}) => {
     const priceData = [
         { date: "2025-03-20", minPrice: "₹2300", maxPrice: "₹2800" },
         { date: "2025-03-21", minPrice: "₹2400", maxPrice: "₹2900" },
@@ -19,9 +19,9 @@ const DateWisePriceList: React.FC = () => {
 
     return (
         <div className="space-y-4">
-            {priceData.map((price: PriceDataTypes, index: number) => (
+            {price?.length? price.map((price: PriceDataTypes, index: number) => (
                 <PriceCard key={index} {...price} />
-            ))}
+            )): null}
         </div>
     );
 };
