@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import SelectWithLabel from "../molecules/SelectWithLabel";
-import Button from "../atoms/Button";
-import { createProduct, getAllCategories } from "../../services/adminService";
-import Text from "../atoms/Text";
-import Input from "../atoms/Input";
-import InputWithLabel from "../molecules/InputWithLabel";
+import SelectWithLabel from "../../molecules/SelectWithLabel";
+import Button from "../../atoms/Button";
+import { createProduct, getAllCategories } from "../../../services/adminService";
+import Text from "../../atoms/Text";
+import Input from "../../atoms/Input";
+import InputWithLabel from "../../molecules/InputWithLabel";
 
 type Category = {
   _id: string;

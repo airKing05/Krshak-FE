@@ -15,15 +15,12 @@ interface ProductCategoryCardProps {
     image: string;
 }
 
-const ProductCategoryCard: React.FC<ProductCategoryCardProps> = ({
-    name,
-    image,
-}) => {
+const ProductCategoryCard: React.FC<ProductCategoryCardProps> = (props) => {
+    const {name,image, _id: categoryId} = props;
     const navigate = useNavigate();
-
     const handleCategoryClicked = () => {
         console.log("clicked...")
-        navigate(`/categories/${name}`);
+        navigate(`/categories/${categoryId}`);
     }
     return (
         <div 

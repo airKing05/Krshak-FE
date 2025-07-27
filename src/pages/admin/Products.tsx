@@ -1,4 +1,4 @@
-import ProductForm from "../../components/organisms/ProductForm";
+import ProductForm from "../../components/organisms/forms/ProductForm";
 
 export default function Products() {
   return (

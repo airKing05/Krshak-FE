@@ -1,11 +1,10 @@
 // src/components/organisms/MarketProductForm.tsx
 import { useEffect, useState } from "react";
-import axios from "axios";
-import SelectWithLabel from "../molecules/SelectWithLabel";
-import { Option } from "../atoms/CustomSelect";
-import Button from "../atoms/Button";
-import { createMarketProductsLink, getAllCategories, getAllMarkets, getAllProducts } from "../../services/adminService";
-import Text from "../atoms/Text";
+import SelectWithLabel from "../../molecules/SelectWithLabel";
+import { Option } from "../../atoms/CustomSelect";
+import Button from "../../atoms/Button";
+import { createMarketProductsLink, getAllCategories, getAllMarkets, getAllProducts } from "../../../services/adminService";
+import Text from "../../atoms/Text";
 
 interface MarketProductFormData {
   marketId: string;

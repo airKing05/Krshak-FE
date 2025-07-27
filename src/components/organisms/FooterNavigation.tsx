@@ -28,7 +28,7 @@ const FooterNavigation: React.FC = () => {
 
     const navItems = [
         { to: "/", icon: location.pathname === '/' ? Logo : BackIcon, label: "Home" },
-        { to: "/categories/wheat", icon: CategoryIcon, label: "Category" },
+        { to: "/categories/all", icon: CategoryIcon, label: "Category" },
         { to: "/products/Product%20A1", icon: ProductIcon, label: "Product" },
         { to: "/comparison", icon: ComparisonIcon, label: "Compare" },
     ];

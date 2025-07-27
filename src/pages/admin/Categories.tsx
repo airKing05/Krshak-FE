@@ -1,4 +1,4 @@
-import CategoryForm from "../../components/organisms/CategoryForm";
+import CategoryForm from "../../components/organisms/forms/CategoryForm";
 
 export default function Categories() {
   return (

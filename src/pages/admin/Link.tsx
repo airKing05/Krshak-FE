@@ -1,6 +1,6 @@
 import { useState } from "react";
-import MarketCategoryForm from "../../components/organisms/MarketCategoryForm";
-import MarketProductForm from "../../components/organisms/MarketProductForm";
+import MarketCategoryForm from "../../components/organisms/forms/MarketCategoryForm";
+import MarketProductForm from "../../components/organisms/forms/MarketProductForm";
 
 export default function Link() {
   const [activeTab, setActiveTab] = useState("category");

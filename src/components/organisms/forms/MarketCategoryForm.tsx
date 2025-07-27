@@ -1,11 +1,11 @@
 // src/components/organisms/MarketCategoryForm.tsx
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import SelectWithLabel from "../molecules/SelectWithLabel";
-import { Option } from "../atoms/CustomSelect";
-import Button from "../atoms/Button";
-import { createMarketCategoriesLink, getAllCategories, getAllMarkets } from "../../services/adminService";
-import Text from "../atoms/Text";
+import SelectWithLabel from "../../molecules/SelectWithLabel";
+import { Option } from "../../atoms/CustomSelect";
+import Button from "../../atoms/Button";
+import { createMarketCategoriesLink, getAllCategories, getAllMarkets } from "../../../services/adminService";
+import Text from "../../atoms/Text";
 
 const MarketCategoryForm = () => {
   const [markets, setMarkets] = useState<Option[]>([]);

@@ -1,4 +1,4 @@
-import MarketForm from "../../components/organisms/MarketForm";
+import MarketForm from "../../components/organisms/forms/MarketForm";
 
 export default function Markets() {
 

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import InputWithLabel from "../molecules/InputWithLabel";
-import Button from "../atoms/Button";
-import { createCategory } from "../../services/adminService";
-import Text from "../atoms/Text";
+import InputWithLabel from "../../molecules/InputWithLabel";
+import Button from "../../atoms/Button";
+import { createCategory } from "../../../services/adminService";
+import Text from "../../atoms/Text";
 
 const CategoryForm = () => {
   const [name, setName] = useState("");

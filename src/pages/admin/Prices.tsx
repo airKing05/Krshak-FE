@@ -1,4 +1,4 @@
-import PriceForm from "../../components/organisms/PriceForm";
+import PriceForm from "../../components/organisms/forms/PriceForm";
 
 export default function Prices() {
 

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import SelectWithLabel from "../molecules/SelectWithLabel";
-import InputWithLabel from "../molecules/InputWithLabel";
-import Button from "../atoms/Button";
-import { createPrice, getAllMarkets, getAllProducts } from "../../services/adminService";
-import Text from "../atoms/Text";
+import SelectWithLabel from "../../molecules/SelectWithLabel";
+import InputWithLabel from "../../molecules/InputWithLabel";
+import Button from "../../atoms/Button";
+import { createPrice, getAllMarkets, getAllProducts } from "../../../services/adminService";
+import Text from "../../atoms/Text";
 
 
 const PriceForm = () => {

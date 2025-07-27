@@ -16,16 +16,16 @@ const CategoryPageTemplate: React.FC = () => {
     const handleProductChange = () => {};
 
 
-    const fetchMarketList = async () => {
-        // here we have to paas marketId and CategoryId too
-        const {_id: marketId} = getFromLocalStorage('marketDetails') 
-        const res = await getMarketProducts(marketId);
+    const fetchMarketProductsList = async () => {
+        // here we have to paas marketId and CategoryId too, 
+        // if want to search based on product name, need to implement those things as well
+        const {_id: marketId} = getFromLocalStorage('marketDetails')
+        const res = await getMarketProducts(marketId, inputCategory);
         setProductsList(res.products);
-        console.log("data", res)
     }
     
     useEffect(() => {
-        fetchMarketList();
+        fetchMarketProductsList();
     }, [])
 
     return (
@@ -35,21 +35,21 @@ const CategoryPageTemplate: React.FC = () => {
             {/* search products to this page based on selected categories */}
             
             <div className="flex space-x-2">
+                 <Input 
+                    name="product"
+                    type="text" 
+                    placeholder="Search products" 
+                    className="flex-1"
+                    value=""
+                    onChange={handleProductChange}
+                />
                 <Input 
                     name="category"
                     type="text" 
                     placeholder="Filter category" 
-                    className="flex-1 p-2"
+                    className="flex-1 max-w-40 p-2"
                     value={inputCategory}
                     onChange={handleCategoryChange}
-                />
-                <Input 
-                    name="product"
-                    type="text" 
-                    placeholder="Search products" 
-                    className="flex-1 max-w-34"
-                    value=""
-                    onChange={handleProductChange}
                 />
             </div>
 

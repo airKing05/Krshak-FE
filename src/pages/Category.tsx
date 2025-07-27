@@ -1,4 +1,3 @@
-import React from 'react'
 import CategoryPageTemplate from '../components/templates/CategoryPageTemplate'
 
 function Category() {
