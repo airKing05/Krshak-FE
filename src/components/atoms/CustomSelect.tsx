@@ -7,6 +7,7 @@ interface CustomSelectProps extends Omit<SelectProps<Option>, "onChange" | "valu
   options: Option[];
   value: string;
   onChange: (value: string) => void;
+  onInputChange? : (input: string) => void;
   placeholder?: string;
 }
 
@@ -25,7 +26,7 @@ const customStyles: StylesConfig<Option> = {
   }),
 };
 
-const CustomSelect: React.FC<CustomSelectProps> = ({ options, value, onChange, placeholder, ...rest }) => {
+const CustomSelect: React.FC<CustomSelectProps> = ({ options, value, onChange, placeholder,onInputChange, ...rest }) => {
   const selected = options.find((opt) => opt.value === value) || null;
 
   return (
@@ -34,7 +35,14 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ options, value, onChange, p
       styles={customStyles}
       value={selected}
       onChange={(option) => onChange(option?.value ?? "")}
+      onInputChange={(inputValue, actionMeta) => {
+        if (actionMeta.action === "input-change") {
+          onInputChange?.(inputValue); // ← only when user is typing
+        }
+        return inputValue;
+      }}
       placeholder={placeholder}
+      isSearchable
       {...rest}
     />
   );

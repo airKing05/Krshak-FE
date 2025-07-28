@@ -7,8 +7,8 @@ export const getMarketCategories = (marketId:string) =>
   axios.get(`${API}/market-categories/${marketId}/categories`).then((res) => res.data);
 
 // market-products
-export const getMarketProducts = (marketId: string, categoryId?:string) =>
-  axios.get(`${API}/market-products/${marketId}?categoryId=${categoryId}`).then((res) => res.data);
+export const getMarketProducts = (marketId: string, categoryId?:string, product?:string) =>
+  axios.get(`${API}/market-products/${marketId}?categoryId=${categoryId}&product=${product}`).then((res) => res.data);
 
 // single products details with prices history by marketId and productId
 export const getSingleProductDetail = (marketId: string, productId?:string) =>

@@ -23,15 +23,22 @@ const ProductCategoryCard: React.FC<ProductCategoryCardProps> = (props) => {
         navigate(`/categories/${categoryId}`);
     }
     return (
-        <div 
-         onClick={handleCategoryClicked}
-         className="p-2 min-h-36 max-w-xs bg-white rounded-lg shadow-md inset-shadow-2xs relative overflow-hidden"
-        >
-            <Text variant="h3" className="font-bold text-lg">{name}</Text>
-            <div className="w-full flex justify-end absolute -bottom-2 right-0 ">
-                <Image src={imageObject[name]} alt={name} className=" w-24 h-24 rounded-tl-4xl" />
-            </div>
-        </div>
+    <div
+      onClick={handleCategoryClicked}
+      className="cursor-pointer p-2 max-w-xs bg-white rounded-lg shadow-md overflow-hidden"
+    >
+      <div className="w-full aspect-[4/3] overflow-hidden rounded-md">
+        <Image
+          src={imageObject[name] || image}
+          alt={name}
+          className="w-full h-full object-cover"
+        />
+      </div>
+
+      <Text variant="h3" className="font-bold text-lg mt-3 text-center">
+        {name}
+      </Text>
+    </div>
     );
 };
 
