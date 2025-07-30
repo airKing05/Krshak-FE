@@ -6,8 +6,8 @@ const navItems = [
   { label: "Markets", to: "/admin/markets" },
   { label: "Categories", to: "/admin/categories" },
   { label: "Products", to: "/admin/products" },
-  { label: "Prices", to: "/admin/prices" },
   { label: "Link", to: "/admin/link" },
+  { label: "Prices", to: "/admin/prices" },
 ];
 
 export default function Sidebar() {

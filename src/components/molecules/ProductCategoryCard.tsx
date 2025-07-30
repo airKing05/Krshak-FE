@@ -20,7 +20,7 @@ const ProductCategoryCard: React.FC<ProductCategoryCardProps> = (props) => {
     const navigate = useNavigate();
     const handleCategoryClicked = () => {
         console.log("clicked...")
-        navigate(`/categories/${categoryId}`);
+        navigate(`/products/${categoryId}`);
     }
     return (
     <div
@@ -35,7 +35,7 @@ const ProductCategoryCard: React.FC<ProductCategoryCardProps> = (props) => {
         />
       </div>
 
-      <Text variant="h3" className="font-bold text-lg mt-3 text-center">
+      <Text variant="h3" className="font-extrabold text-2xl mt-3 text-center">
         {name}
       </Text>
     </div>

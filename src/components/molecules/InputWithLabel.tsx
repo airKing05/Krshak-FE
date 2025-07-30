@@ -10,6 +10,7 @@ interface InputWithLabelProps {
   type?: string;
   required?: boolean;
   placeholder?: string;
+  className?: string
 }
 
 const InputWithLabel: React.FC<InputWithLabelProps> = ({
@@ -20,6 +21,7 @@ const InputWithLabel: React.FC<InputWithLabelProps> = ({
   type = "text",
   required = false,
   placeholder,
+  className
 }) => {
   return (
     <div className="mb-6">
@@ -32,6 +34,7 @@ const InputWithLabel: React.FC<InputWithLabelProps> = ({
         onChange={onChange}
         type={type}
         placeholder={placeholder || `Enter ${label}`}
+        className={className}
       />
     </div>
   );

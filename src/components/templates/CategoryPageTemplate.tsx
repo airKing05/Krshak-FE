@@ -10,7 +10,7 @@ import { debounce } from "../../utils/common";
 const CategoryPageTemplate: React.FC = () => {
     const params = useParams();
     const [productsList, setProductsList] = useState([]);
-    const [inputCategory, setInputCategory] = useState(params?.category || "");
+    const [inputCategory, setInputCategory] = useState(params?.categoryId || "");
     const [categoriesList, setCategoryList] = useState([]);
 
 

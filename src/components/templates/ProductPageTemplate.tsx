@@ -6,6 +6,7 @@ import LineChart from "../charts/LineChart";
 import { getSingleProductDetail } from "../../services/productService";
 import { useParams } from "react-router-dom";
 import { getFromLocalStorage } from "../../utils/localStorage";
+import { formatISODateToDDMMYYYY } from "../../utils/common";
 
 const carousalData = [
     {
@@ -39,12 +40,12 @@ const ProductPageTemplate: React.FC = () => {
         fetchSingleProductDetails();
     }, [])
 
-    console.log("data---", productDetails)
     
+    const formattedPriceDataForGraph = (price) =>  price?.length? price.map((_price) => [formatISODateToDDMMYYYY(_price.date), _price.maxPrice]): []
 
 
     return (
-        <div className="p-4 space-y-4 pb-12">
+        <div className="p-4 space-y-4 pb-12 mb-12">
             {/* Product Details Section */}
             <ProductDetails
                 mandi={productDetails?.market?.name}
@@ -66,7 +67,7 @@ const ProductPageTemplate: React.FC = () => {
             <DateWisePriceList price={productDetails?.price}/>
 
             {/* product's price chart based on last 6 days price fluctuations */}
-            <LineChart/>
+            <LineChart data={[['date', 'price'], ...formattedPriceDataForGraph(productDetails?.price)]}/>
         </div>
     );
 };

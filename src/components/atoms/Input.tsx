@@ -1,5 +1,5 @@
 // src/components/atoms/Input.tsx
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 interface InputProps {
   name: string;
@@ -18,9 +18,23 @@ const Input: React.FC<InputProps> = ({
   placeholder = "",
   className = ""
 }) => {
+  const [maxDate, setMaxDate] = useState('');
+
+  useEffect(() => {
+    // Only calculate maxDate if the input type is "date"
+    if (type === 'date') {
+      const today = new Date();
+      const formattedDate = today.toISOString().split('T')[0]; 
+      setMaxDate(formattedDate);
+    } else {
+      setMaxDate(''); 
+    }
+  }, [type]);
+
   return (
     <input
       type={type}
+      max={type === 'date' ? maxDate : undefined}
       name={name}
       value={value}
       onChange={onChange}

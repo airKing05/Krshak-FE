@@ -5,3 +5,23 @@ body{
     padding: 0;
     box-sizing: border-box;
 }
+
+
+
+.scrollbar-visible {
+  scrollbar-width: auto;
+  -ms-overflow-style: auto;
+  overflow-x: scroll !important;
+}
+
+.scrollbar-visible::-webkit-scrollbar {
+  height: 6px;
+}
+.scrollbar-visible::-webkit-scrollbar-thumb {
+  background-color: #d1d5db;
+  border-radius: 9999px;
+}
+.scrollbar-visible::-webkit-scrollbar-track {
+  background-color: #f9fafb;
+}
+

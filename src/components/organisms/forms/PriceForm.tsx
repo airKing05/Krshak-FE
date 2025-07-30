@@ -11,7 +11,7 @@ const PriceForm = () => {
   const [marketId, setMarketId] = useState("");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
   const [products, setProducts] = useState([]);
   const [markets, setMarkets] = useState([]);
 
@@ -35,7 +35,7 @@ const PriceForm = () => {
     setMarketId("");
     setMinPrice("");
     setMaxPrice("");
-    setDate("");
+    // setDate("");
   };
 
   return (

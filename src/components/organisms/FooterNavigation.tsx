@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import NavItem from "../molecules/NavItem";
 import { useLocation } from "react-router-dom";
 import CategoryIcon from '../../assets/icons/categoryStack.svg';
-import ProductIcon from '../../assets/icons/product.svg';
 import ComparisonIcon from '../../assets/icons/comparison.svg';
 import BackIcon from '../../assets/icons/LeftCircleArrow.svg';
 import Logo from '../../assets/icons/LOGO.svg';
@@ -28,8 +27,8 @@ const FooterNavigation: React.FC = () => {
 
     const navItems = [
         { to: "/", icon: location.pathname === '/' ? Logo : BackIcon, label: "Home" },
-        { to: "/categories/all", icon: CategoryIcon, label: "Category" },
-        { to: "/products/Product%20A1", icon: ProductIcon, label: "Product" },
+        { to: "/products/all", icon: CategoryIcon, label: "Products" },
+        // { to: "/products/Product%20A1", icon: ProductIcon, label: "Product" },
         { to: "/comparison", icon: ComparisonIcon, label: "Compare" },
     ];
 

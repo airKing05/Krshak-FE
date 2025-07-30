@@ -1,15 +1,4 @@
-import React from "react";
 import { Chart } from "react-google-charts";
-
-const data = [
-    ["date", "price", "rate"],
-    ["2013", 1000, 500],
-    ["2014", 1170, 800],
-    ["2015", 660, 200],
-    ["2016", 1030, 1000],
-    ["2017", 2000, 1200],
-    ["2018", 2200, 1500],
-];
 
 const options = {
     title: "Last 6 day's price analysis",
@@ -20,8 +9,10 @@ const options = {
     },
     legend: { position: "bottom" },
     hAxis: {
-        title: 'Year',
-        titleTextStyle: { color: 'black' },
+        title: 'Date',
+        titleTextStyle: { color: 'black'},
+        slantedText: true, // Enable slanted text
+        slantedTextAngle: 45, // Rotate labels by 90 degrees (vertical)
     },
     vAxis: {
         title: 'Price',
@@ -29,10 +20,10 @@ const options = {
     },
     // curveType: 'function', // Optional: Adds a smooth line to your chart
     width: '100%',
-    height: 400,
+    height: 500,
 };
 
-function LineChart() {
+function LineChart({data}) {
     return (
         <Chart
             chartType="LineChart"

@@ -22,7 +22,7 @@ const customStyles: StylesConfig<Option> = {
   }),
   menu: (base) => ({
     ...base,
-    zIndex: 10,
+    zIndex: 30,
   }),
 };
 
