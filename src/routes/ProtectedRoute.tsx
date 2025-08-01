@@ -9,11 +9,11 @@ interface Props {
 }
 
 const ProtectedRoute: React.FC<Props> = ({ children }) => {
-  const tokenObj = getFromLocalStorage<{ token: string }>('token');
+  const token = getFromLocalStorage('token') as string;
   const userObj = getFromLocalStorage<UserObj>('user');
 
-  console.log("userObj", userObj, tokenObj)
-  if (!tokenObj?.token || !isTokenValid(tokenObj.token)) {
+  console.log("userObj", userObj, token)
+  if (!token || !isTokenValid(token)) {
     return <Navigate to="/login" replace />;
   }
 

@@ -35,7 +35,8 @@ const MarketProductForm = () => {
         setCategories(res2.map((c: any) => ({ label: c.name, value: c._id })));
         setProducts(res3.map((p: any) => ({ label: p.name, value: p._id })));
       } catch (error) {
-        toast.error("Error fetching data");
+        // toast.error("Error fetching data");
+        console.error("Error fetching data", error)
       }
     };
     fetchData();

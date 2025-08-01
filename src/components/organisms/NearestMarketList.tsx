@@ -14,7 +14,7 @@ const NearestMarketList: React.FC = () => {
             title: "Kuwarti mandi",
             distance: "18 km",
             id: 2, 
-        }, ,
+        }, 
     ];
 
     return (

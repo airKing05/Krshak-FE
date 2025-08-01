@@ -18,8 +18,8 @@ function App() {
   const location = useLocation();
 
   useEffect(() => {
-    const tokenObj = getFromLocalStorage<{ token: string }>('token');
-    const isLoggedIn = tokenObj?.token && isTokenValid(tokenObj.token);
+    const token = getFromLocalStorage('token') as string;
+    const isLoggedIn = token && isTokenValid(token);
 
     if (location.pathname === '/login' && isLoggedIn) {
       navigate('/admin', { replace: true });

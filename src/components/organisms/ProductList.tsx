@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Card from "../molecules/Card";
 import { useNavigate } from "react-router-dom";
+import { DetailedProduct } from "../../types/common";
 
 
-const productsImages = {
+const productsImages: Record<string, string> = {
     "lokwan": 'https://5.imimg.com/data5/ST/QW/MY-38700875/fresh-wheat-crop.jpg',
     "lamaba gehu": 'https://5.imimg.com/data5/ST/QW/MY-38700875/fresh-wheat-crop.jpg',
     "piddi": 'https://gachwala.in/wp-content/uploads/2023/02/WHEAT.jpg',
@@ -12,8 +13,13 @@ const productsImages = {
     "js": 'https://5.imimg.com/data5/SELLER/Default/2025/3/496240959/PG/EK/GQ/186090800/non-gmo-soybean-500x500.png'
 };
 
-const ProductList: React.FC = ({productsList}) => {
-    const [products, setProducts] = useState([...productsList]);
+
+
+interface ProductListProps{
+  productsList : DetailedProduct[]
+}
+const ProductList: React.FC<ProductListProps> = ({productsList}) => {
+    const [products, setProducts] = useState<DetailedProduct[]>([...productsList]);
    // we have data still it is not able to render on first time load 
 
     useEffect(() => {
@@ -46,7 +52,7 @@ const ProductList: React.FC = ({productsList}) => {
 
     return (
         <InfiniteScroll dataLength={products.length} next={fetchMoreData} hasMore={true} loader={<p>Loading...</p>}>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-10">
                 {products.map((item) => (
                    <React.Fragment key={item._id} >
                      <Card 

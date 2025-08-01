@@ -4,6 +4,7 @@ import InputWithLabel from "../../molecules/InputWithLabel";
 import Button from "../../atoms/Button";
 import { createPrice, getAllMarkets, getAllProducts } from "../../../services/adminService";
 import Text from "../../atoms/Text";
+import { Market, Product } from "../../../types/common";
 
 
 const PriceForm = () => {
@@ -16,9 +17,22 @@ const PriceForm = () => {
   const [markets, setMarkets] = useState([]);
 
 
+
   useEffect(() => {
-    getAllProducts().then((res) => setProducts(res));
-    getAllMarkets().then((res) => setMarkets(res));
+    const fetchData = async () => {
+      try {
+        const [res1, res2] = await Promise.all([
+          getAllMarkets(),
+          getAllProducts(),
+        ]);
+        setMarkets(res1.map((m: Market) => ({ label: m.name, value: m._id })));
+        setProducts(res2.map((p: Product) => ({ label: p.name, value: p._id })));
+      } catch (error) {
+        // toast.error("Error fetching data");
+        console.error("Error fetching data", error);
+      }
+    };
+    fetchData();
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -52,10 +66,7 @@ const PriceForm = () => {
         name="market"
         value={marketId}
         onChange={(e) => setMarketId(e.target.value)}
-        options={markets.map((market) => ({
-          label: market.name,
-          value: market._id,
-        }))}
+        options={markets}
       />
 
       <SelectWithLabel
@@ -63,10 +74,7 @@ const PriceForm = () => {
         name="product"
         value={productId}
         onChange={(e) => setProductId(e.target.value)}
-        options={products.map((product) => ({
-          label: product.name,
-          value: product._id,
-        }))}
+        options={products}
       />
 
       <InputWithLabel

@@ -1,12 +1,11 @@
-// routes/AdminRoutes.tsx
 import { Route, Routes } from "react-router-dom";
 import AdminLayout from "../components/templates/AdminLayout";
-import Categories from "../pages/admin/categories";
-import Products from "../pages/admin/products";
-import Prices from "../pages/admin/prices";
-import Markets from "../pages/admin/markets";
 import Link from "../pages/admin/Link";
 import Dashboard from "../pages/admin/Dashboard";
+import Markets from "../pages/admin/Markets";
+import Categories from "../pages/admin/Categories";
+import Products from "../pages/admin/Products";
+import Prices from "../pages/admin/Prices";
 
 
 export default function AdminRoutes() {

@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Filters } from "../types/common";
 
 const API = "http://localhost:5001/api/v1"; // change this based on environment
 

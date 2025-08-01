@@ -5,11 +5,11 @@ interface CardProps {
     imageUrl?: string | undefined;
     title: string;
     subtitle?: string;
-    maxPrice?: string;
+    maxPrice?: string | number;
     distance?: string;
     showWishButton?: boolean;
     // id: string | number | undefined;
-    handleClick: () => void;
+    handleClick?: () => void;
 }
 
 const Card: React.FC<CardProps> = ({ imageUrl, title, subtitle, maxPrice, showWishButton, distance, handleClick }) => {

@@ -7,6 +7,7 @@ import { getSingleProductDetail } from "../../services/productService";
 import { useParams } from "react-router-dom";
 import { getFromLocalStorage } from "../../utils/localStorage";
 import { formatISODateToDDMMYYYY } from "../../utils/common";
+import { Market, ProductDetailsType } from "../../types/common";
 
 const carousalData = [
     {
@@ -24,13 +25,15 @@ const carousalData = [
     }
 ]
 
+const formattedPriceDataForGraph = (price?: ProductDetailsType['price']) =>  price?.length? price.map((_price) => [formatISODateToDDMMYYYY(_price.date), _price.maxPrice]): []
+
+
 const ProductPageTemplate: React.FC = () => {
-    const { productId } = useParams();
-    const [productDetails, setProductDetails] = useState(null);
+    const { productId } = useParams<{ productId: string }>();
+    const [productDetails, setProductDetails] = useState<ProductDetailsType | null>(null);
 
     const fetchSingleProductDetails = async () => {
-        const marketDetails = getFromLocalStorage('marketDetails') 
-        console.log("marketDetails", marketDetails)
+        const marketDetails = getFromLocalStorage('marketDetails') as Market;
         const res = await getSingleProductDetail(marketDetails._id, productId);
         setProductDetails(() => ({...res, market: marketDetails}));
         console.log("data", res)
@@ -41,14 +44,13 @@ const ProductPageTemplate: React.FC = () => {
     }, [])
 
     
-    const formattedPriceDataForGraph = (price) =>  price?.length? price.map((_price) => [formatISODateToDDMMYYYY(_price.date), _price.maxPrice]): []
 
 
     return (
         <div className="p-4 space-y-4 pb-12 mb-12">
             {/* Product Details Section */}
             <ProductDetails
-                mandi={productDetails?.market?.name}
+                marketName={productDetails?.market?.name}
                 city={productDetails?.market?.city}
                 productName={productDetails?.product?.name}
                 category={productDetails?.product?.category?.name}

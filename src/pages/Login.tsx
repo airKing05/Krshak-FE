@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { getUserInfo, login } from '../services/adminService';
 import Button from '../components/atoms/Button';
 import InputWithLabel from '../components/molecules/InputWithLabel';
@@ -17,9 +17,11 @@ export default function LoginPage() {
   
 
   const getUserData = async () => {
-  const data = getFromLocalStorage<{ token: string;}>('token');
-  if (!isTokenValid(data?.token)) return;
-   const res = await getUserInfo();
+  const token = getFromLocalStorage('token') as string;
+    console.log("get res", token)
+
+  if ( !isTokenValid(token)) return;
+   const res = await getUserInfo(token);
    setToLocalStorage('user', res.user);
   }
 
@@ -30,8 +32,8 @@ export default function LoginPage() {
    
   
     const res = await login(email, password);
-      console.log("res", res)
-      setToLocalStorage('token', res);
+    console.log("set res", res)
+      setToLocalStorage('token', res.token);
       await getUserData();
       navigate(`/admin`);
     

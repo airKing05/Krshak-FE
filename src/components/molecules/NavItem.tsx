@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Icon from "../atoms/Icon";
 import Label from "../atoms/Label";
 import Image from "../atoms/Image";
 

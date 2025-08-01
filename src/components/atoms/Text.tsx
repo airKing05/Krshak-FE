@@ -1,6 +1,6 @@
 
 interface TextProps {
-    variant?: string;
+    variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'small'; 
     children: React.ReactNode;
     className?: string;
 }
@@ -8,7 +8,7 @@ interface TextProps {
 const Text: React.FC<TextProps> = ({ variant = "p", children, className = "" }) => {
     const baseStyles = "text-gray-800";
 
-    const variants = {
+    const variants: Record<string, string> = {
         h1: "text-4xl font-bold",
         h2: "text-3xl font-semibold",
         h3: "text-2xl font-medium",

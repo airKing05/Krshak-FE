@@ -3,10 +3,10 @@ import WeatherInfo from "../atoms/WeatherInfo";
 import Text from "../atoms/Text";
 
 interface ProductDetailsProps {
-    mandi: string;
-    city: string;
-    productName: string;
-    category: string;
+    marketName?: string;
+    city?: string;
+    productName?: string;
+    category?: string;
     minPrice: string;
     maxPrice: string;
     temperature: string;
@@ -14,7 +14,7 @@ interface ProductDetailsProps {
 }
 
 const ProductDetails: React.FC<ProductDetailsProps> = ({
-    mandi,
+    marketName,
     city,
     productName,
     category,
@@ -25,7 +25,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
 }) => {
     return (
         <div className=" bg-white shadow-md rounded-lg p-4">
-            <Text variant="h2" className="text-xl font-medium text-gray-700">{mandi}, {city} in India</Text>
+            <Text variant="h2" className="text-xl font-medium text-gray-700">{marketName}, {city} in India</Text>
             <div className="flex justify-between items-center mt-2">
                 <div>
                     <Text variant="h1" className="text-3xl font-semibold">{productName}</Text>

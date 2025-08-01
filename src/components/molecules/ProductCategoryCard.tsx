@@ -4,7 +4,7 @@ import Text from "../atoms/Text";
 import { useNavigate } from "react-router-dom";
 
 
-const imageObject = {
+const imageObject: Record<string, string> = {
     "gehu" : "https://5.imimg.com/data5/ST/QW/MY-38700875/fresh-wheat-crop.jpg",
     "rice" : "https://5.imimg.com/data5/SELLER/Default/2021/3/UK/NH/LE/83707430/pr-122-paddy-seed-500x500.png",
     "soyabin": 'https://web-cdn.markets.com/Soy_bean_mature_seeds_with_immature_soybeans_in_the_pod_Soy_bean_close_up_Open_green_soybean_pod_on_dry_soy_beans_background_Green_soybean_pods_on_dry_soy_bean_f2cf13ebe9.jpg.webp',
@@ -12,11 +12,12 @@ const imageObject = {
 
 interface ProductCategoryCardProps {
     name: string;
-    image: string;
+    image?: string;
+    _id?: string;
 }
 
 const ProductCategoryCard: React.FC<ProductCategoryCardProps> = (props) => {
-    const {name,image, _id: categoryId} = props;
+    const {name, image, _id: categoryId} = props;
     const navigate = useNavigate();
     const handleCategoryClicked = () => {
         console.log("clicked...")
@@ -29,7 +30,7 @@ const ProductCategoryCard: React.FC<ProductCategoryCardProps> = (props) => {
     >
       <div className="w-full aspect-[4/3] overflow-hidden rounded-md">
         <Image
-          src={imageObject[name] || image}
+          src={image ? image : imageObject[name]}
           alt={name}
           className="w-full h-full object-cover"
         />

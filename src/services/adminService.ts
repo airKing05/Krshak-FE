@@ -1,8 +1,7 @@
 // src/services/adminService.ts
 import axios from "axios";
-import { getFromLocalStorage } from "../utils/localStorage";
 
-const API = "http://localhost:5001/api/v1"; // change this based on environment
+const API = "http://localhost:5001/api/v1";
 
 interface PriceData {
   productId: string
@@ -26,7 +25,7 @@ export const getAllCategories = () =>
   axios.get(`${API}/categories`).then((res) => res.data);
 
 // Products
-export const createProduct = (data: { name: string, categoryId: string }) =>
+export const createProduct = (data: { name: string, categoryId: string, images?: string[] }) =>
   axios.post(`${API}/products`, data);
 
 export const getAllProducts = () =>
@@ -58,9 +57,8 @@ export const getMarketProductsLink = () =>
 export const login = (email: string, password: string) => 
   axios.post(`${API}/login`, { email, password }).then((res) => res.data);
 
-export const getUserInfo = () => {
-  const {token} = getFromLocalStorage('token');
-  console.log("token", token)
+export const getUserInfo = (token: string) => {
+
   return axios
     .get(`${API}/user-info`, {
       headers: {

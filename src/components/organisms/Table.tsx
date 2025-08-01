@@ -2,7 +2,7 @@ import React from "react";
 import CustomSelect, { Option } from "../atoms/CustomSelect";
 import { FilterChangeEvent, Filters } from "../../types/common";
 
-const productsImages = {
+const productsImages: Record<string, string> = {
     "lokwan": 'https://5.imimg.com/data5/ST/QW/MY-38700875/fresh-wheat-crop.jpg',
     "lamaba gehu": 'https://5.imimg.com/data5/ST/QW/MY-38700875/fresh-wheat-crop.jpg',
     "piddi": 'https://gachwala.in/wp-content/uploads/2023/02/WHEAT.jpg',
@@ -10,11 +10,16 @@ const productsImages = {
     "js": 'https://5.imimg.com/data5/SELLER/Default/2025/3/496240959/PG/EK/GQ/186090800/non-gmo-soybean-500x500.png'
 };
 
+type priceData = {
+  minPrice: string;
+  maxPrice: string;
+}
 
 type RowData = {
-  product: string;
+  name: string;
   image: string;
-  marketValues: Record<string, string>;
+  market1: priceData;
+  market2: priceData;
 };
 
 type TableProps = {

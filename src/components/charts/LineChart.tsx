@@ -1,6 +1,11 @@
 import { Chart } from "react-google-charts";
+import  { GoogleChartOptions } from "react-google-charts";
 
-const options = {
+interface LineChartProps{
+  data : (string | number)[][];
+}
+
+const options: GoogleChartOptions = {
     title: "Last 6 day's price analysis",
     chart: {
         title: "last 6 day's price analysis",
@@ -19,11 +24,13 @@ const options = {
         titleTextStyle: { color: 'black' },
     },
     // curveType: 'function', // Optional: Adds a smooth line to your chart
-    width: '100%',
+    // width: '100%',
     height: 500,
+    backgroundColor: 'white', 
 };
 
-function LineChart({data}) {
+
+const LineChart: React.FC<LineChartProps> = ({data}) =>  {
     return (
         <Chart
             chartType="LineChart"

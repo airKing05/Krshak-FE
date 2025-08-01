@@ -26,7 +26,7 @@ export function getFromLocalStorage<T>(key: string): T | string | null {
     try {
       return JSON.parse(item) as T;
     } catch {
-      return item; // fallback to raw string if not JSON
+      return item; 
     }
   } catch (error) {
     console.warn(`Error accessing localStorage item "${key}":`, error);

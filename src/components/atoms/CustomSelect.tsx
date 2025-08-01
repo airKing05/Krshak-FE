@@ -1,5 +1,4 @@
-// src/components/atoms/CustomSelect.tsx
-import Select, { Props as SelectProps, StylesConfig } from "react-select";
+import Select, { Props as SelectProps, StylesConfig, SingleValue } from "react-select";
 
 type Option = { label: string; value: string };
 
@@ -31,10 +30,11 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ options, value, onChange, p
 
   return (
     <Select
+      isMulti={false}
       options={options}
       styles={customStyles}
       value={selected}
-      onChange={(option) => onChange(option?.value ?? "")}
+      onChange={(option) => onChange((option as SingleValue<Option>)?.value ?? "")}
       onInputChange={(inputValue, actionMeta) => {
         if (actionMeta.action === "input-change") {
           onInputChange?.(inputValue); // ← only when user is typing

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import NearestMarketList from "../organisms/NearestMarketList";
 import ProductCategories from "../organisms/ProductCategories";
 import Text from "../atoms/Text";
@@ -9,6 +9,7 @@ import { getAllMarkets } from "../../services/adminService";
 import { getMarketCategories } from "../../services/productService";
 import { getFromLocalStorage, setToLocalStorage } from "../../utils/localStorage";
 import CustomSelect from "../atoms/CustomSelect";
+import { Market } from "../../types/common";
 
 const HomePageTemplate: React.FC = () => {
     const cityName = useCityName();
@@ -17,10 +18,10 @@ const HomePageTemplate: React.FC = () => {
     const [selectedMarket, setSelectedMarket] = useState("");
     // const typedInputMarket = useRef("");
 
-    const fetchMandiData = () => {
-        const url = '/resource/9ef84268-d588-465a-a308-a864a43d0070';
-        const apiKey = '579b464db66ec23bdd0000019d440267cc2a4b69502c47bb07a153d5';
-    }
+    // const fetchMandiData = () => {
+    //     const url = '/resource/9ef84268-d588-465a-a308-a864a43d0070';
+    //     const apiKey = '579b464db66ec23bdd0000019d440267cc2a4b69502c47bb07a153d5';
+    // }
 
     const getCategoriesListByMarketId = async(marketId: string) => {
         const res = await getMarketCategories(marketId);
@@ -28,9 +29,9 @@ const HomePageTemplate: React.FC = () => {
         setCategoryList(res)
     }
 
-    const filterMarketBasedOnLocation = (listOfMarkets: any) => {
+    const filterMarketBasedOnLocation = (listOfMarkets: Market[]) => {
       const testCity = 'kota'
-      const marketDetails = listOfMarkets.find((market:any) => market.city === testCity.toLowerCase())
+      const marketDetails = listOfMarkets.find((market: Market) => market.city === testCity.toLowerCase())
     //   console.log("marketId", marketDetails)
       setToLocalStorage('marketDetails', marketDetails)
      
@@ -39,7 +40,7 @@ const HomePageTemplate: React.FC = () => {
     const fetchMarketList = async () => {
         const res = await getAllMarkets();
         filterMarketBasedOnLocation(res);
-        setAllMarketsOptions(res.map((m: any) => ({ label: m.name, value: m._id })));
+        setAllMarketsOptions(res.map((m: Market) => ({ label: m.name, value: m._id })));
         // console.log("data", res)
     }
 
@@ -48,7 +49,7 @@ const HomePageTemplate: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        const marketDetails = getFromLocalStorage('marketDetails');
+        const marketDetails = getFromLocalStorage('marketDetails') as Market;
         console.log("selectedMarket", selectedMarket)
         getCategoriesListByMarketId(selectedMarket? selectedMarket : marketDetails._id);
     }, [selectedMarket]);

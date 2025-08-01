@@ -4,14 +4,15 @@ import { useParams } from "react-router-dom";
 import Input from "../atoms/Input";
 import { getMarketCategories, getMarketProducts } from "../../services/productService";
 import { getFromLocalStorage } from "../../utils/localStorage";
-import CustomSelect from "../atoms/CustomSelect";
+import CustomSelect, { Option } from "../atoms/CustomSelect";
 import { debounce } from "../../utils/common";
+import { Market, DetailedProduct, ProductCategory } from "../../types/common";
 
 const CategoryPageTemplate: React.FC = () => {
     const params = useParams();
-    const [productsList, setProductsList] = useState([]);
+    const [productsList, setProductsList] = useState<DetailedProduct[]>([]);
     const [inputCategory, setInputCategory] = useState(params?.categoryId || "");
-    const [categoriesList, setCategoryList] = useState([]);
+    const [categoriesOptions, setCategoryOptions] = useState<Option[]>([]);
 
 
 
@@ -26,7 +27,7 @@ const CategoryPageTemplate: React.FC = () => {
         // here we have to paas marketId and CategoryId too, 
         // if want to search based on product name, need to implement those things as well
         // TODO improve for infinite scrolling
-        const {_id: marketId} = getFromLocalStorage('marketDetails')
+        const {_id: marketId} = getFromLocalStorage('marketDetails') as Market;
         const res = await getMarketProducts(marketId, inputCategory, inputProduct);
         setProductsList(res.products);
     }
@@ -39,12 +40,12 @@ const CategoryPageTemplate: React.FC = () => {
 
     const getCategoriesListByMarketId = async(marketId: string) => {
         const res = await getMarketCategories(marketId);
-        const categoriesOptionsList = [{ label: 'All', value: 'all' }, ...res.map((c: any) => ({ label: c.name, value: c._id }))]
-        setCategoryList(categoriesOptionsList || [])
+        const categoriesOptionsList = [{ label: 'All', value: 'all' }, ...res.map((c: ProductCategory) => ({ label: c.name, value: c._id }))]
+        setCategoryOptions(categoriesOptionsList || [])
     }
 
     useEffect(() => {
-        const marketDetails = getFromLocalStorage('marketDetails');
+        const marketDetails = getFromLocalStorage('marketDetails') as Market;
         if(marketDetails?._id){
           getCategoriesListByMarketId(marketDetails?._id);
         }
@@ -69,7 +70,7 @@ const CategoryPageTemplate: React.FC = () => {
                     <CustomSelect
                         value={inputCategory}
                         onChange={setInputCategory}
-                        options={categoriesList}
+                        options={categoriesOptions}
                         placeholder={`Select Category`}
                     />
                 </div>
