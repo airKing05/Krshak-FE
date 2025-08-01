@@ -25,7 +25,7 @@ const ProductCategoryCard: React.FC<ProductCategoryCardProps> = (props) => {
     return (
     <div
       onClick={handleCategoryClicked}
-      className="cursor-pointer p-2 max-w-xs bg-white rounded-lg shadow-md overflow-hidden"
+      className="cursor-pointer p-2 max-w-xs bg-white rounded-lg shadow-md overflow-hidden w-full  transition-transform hover:scale-105 duration-200"
     >
       <div className="w-full aspect-[4/3] overflow-hidden rounded-md">
         <Image

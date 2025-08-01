@@ -16,7 +16,7 @@ const Card: React.FC<CardProps> = ({ imageUrl, title, subtitle, maxPrice, showWi
     return (
         <div 
           onClick={handleClick}
-          className="flex items-center bg-white shadow-lg rounded-lg p-4 space-x-4 relative"
+          className="w-full flex items-center bg-white shadow-lg rounded-lg p-4 space-x-4 relative"
         >
             {/* Image */}
             <img

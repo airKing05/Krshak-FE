@@ -1,5 +1,4 @@
 import React from "react";
-import MarketCard from "../molecules/MarketCard";
 import Card from "../molecules/Card";
 
 const NearestMarketList: React.FC = () => {
@@ -19,7 +18,7 @@ const NearestMarketList: React.FC = () => {
     ];
 
     return (
-        <div className="space-y-4">
+        <div className="max-w-4xl mx-auto sm:px-6 md:px-8 space-y-4">
             {markets.map((market, index) => (
                 <Card key={index} {...market}/>
             ))}

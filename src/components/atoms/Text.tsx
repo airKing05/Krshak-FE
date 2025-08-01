@@ -12,7 +12,10 @@ const Text: React.FC<TextProps> = ({ variant = "p", children, className = "" }) 
         h1: "text-4xl font-bold",
         h2: "text-3xl font-semibold",
         h3: "text-2xl font-medium",
-        p: "text-base",
+        h4: "text-2xl font-medium",
+        h5: "text-xl font-medium",
+        h6: "text-lg font-medium",
+        p: "text-sm",
         small: "text-sm text-gray-600 dark:text-gray-400",
     };
 

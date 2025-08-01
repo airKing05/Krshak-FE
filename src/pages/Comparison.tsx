@@ -63,7 +63,7 @@ function Comparison() {
   };
 
   return (
-    <div className="p-6 min-h-screen bg-gray-50">
+    <div className="p-6 min-h-screen bg-gray-50 max-w-7xl mx-auto">
       <div className="flex flex-col md:gap-4 sm:flex-row mb-2">
         <div className="w-full sm:w-1/2">
           <SelectWithLabel

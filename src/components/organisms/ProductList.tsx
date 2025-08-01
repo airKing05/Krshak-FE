@@ -14,7 +14,6 @@ const productsImages = {
 
 const ProductList: React.FC = ({productsList}) => {
     const [products, setProducts] = useState([...productsList]);
-    console.log("productsList....", products)
    // we have data still it is not able to render on first time load 
 
     useEffect(() => {
@@ -42,12 +41,12 @@ const ProductList: React.FC = ({productsList}) => {
     };
 
     const handleProductClicked = (productId: string) => {
-        navigate(`/products/${productId}`);
+        navigate(`/product-details/${productId}`);
     }
 
     return (
         <InfiniteScroll dataLength={products.length} next={fetchMoreData} hasMore={true} loader={<p>Loading...</p>}>
-            <div className="space-y-3">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 {products.map((item) => (
                    <React.Fragment key={item._id} >
                      <Card 
