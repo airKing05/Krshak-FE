@@ -11,3 +11,9 @@ export type FilterChangeEvent = {
     value: string;
   };
 };
+
+
+export type UserObj = {
+  email: string;
+  role: string;
+}

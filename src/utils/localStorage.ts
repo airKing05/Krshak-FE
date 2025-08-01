@@ -17,17 +17,23 @@ export function setToLocalStorage<T>(key: string, value: T): void {
  * Retrieve and parse value from localStorage.
  * If parsing fails, returns raw string or null.
  */
-export function getFromLocalStorage<T>(key: string): T | null {
+export function getFromLocalStorage<T>(key: string): T | string | null {
   try {
+    if (typeof window === 'undefined') return null;
     const item = localStorage.getItem(key);
     if (!item) return null;
 
-    return JSON.parse(item) as T;
+    try {
+      return JSON.parse(item) as T;
+    } catch {
+      return item; // fallback to raw string if not JSON
+    }
   } catch (error) {
-    console.warn(`Error parsing localStorage item "${key}":`, error);
+    console.warn(`Error accessing localStorage item "${key}":`, error);
     return null;
   }
 }
+
 
 /**
  * Remove a key from localStorage.

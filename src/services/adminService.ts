@@ -1,5 +1,6 @@
 // src/services/adminService.ts
 import axios from "axios";
+import { getFromLocalStorage } from "../utils/localStorage";
 
 const API = "http://localhost:5001/api/v1"; // change this based on environment
 
@@ -51,3 +52,21 @@ export const createMarketProductsLink = (data: { marketId: string, categoryId: s
 
 export const getMarketProductsLink = () =>
   axios.get(`${API}/market-products`).then((res) => res.data);
+
+
+// login
+export const login = (email: string, password: string) => 
+  axios.post(`${API}/login`, { email, password }).then((res) => res.data);
+
+export const getUserInfo = () => {
+  const {token} = getFromLocalStorage('token');
+  console.log("token", token)
+  return axios
+    .get(`${API}/user-info`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => res.data);
+};
