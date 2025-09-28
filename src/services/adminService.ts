@@ -11,9 +11,10 @@ interface PriceData {
   date: string
 }
 // Markets
-export const createMarket = (data: { name: string }) =>
-  axios.post(`${API}/markets`, data);
-
+export const createMarket = (data: any) =>{
+  console.log("this is ", data)
+  return axios.post(`${API}/markets`, data);
+}
 export const getAllMarkets = () =>
   axios.get(`${API}/markets`).then((res) => res.data);
 

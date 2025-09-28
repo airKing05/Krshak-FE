@@ -11,6 +11,10 @@ interface dataForComparisonTypes {
   limit: number
 }
 
+//
+export const getMarketByMarketId = (marketId:string) =>
+  axios.get(`${API}/markets/${marketId}`).then((res) => res.data);
+
 // market-categories
 export const getMarketCategories = (marketId:string) =>
   axios.get(`${API}/market-categories/${marketId}/categories`).then((res) => res.data);

@@ -14,8 +14,8 @@ import { Market } from "../../types/common";
 const HomePageTemplate: React.FC = () => {
     const cityName = useCityName();
     const [categoriesList, setCategoryList] = useState([]);
-    const [allMarketsOptions, setAllMarketsOptions] = useState([]);
-    const [selectedMarket, setSelectedMarket] = useState("");
+    const [allMarkets, setAllMarkets] = useState([]);
+    const [selectedMarket, setSelectedMarket] = useState(getFromLocalStorage('marketDetails')?._id || null);
     // const typedInputMarket = useRef("");
 
     // const fetchMandiData = () => {
@@ -23,6 +23,7 @@ const HomePageTemplate: React.FC = () => {
     //     const apiKey = '579b464db66ec23bdd0000019d440267cc2a4b69502c47bb07a153d5';
     // }
 
+    console.log("......", selectedMarket)
     const getCategoriesListByMarketId = async(marketId: string) => {
         const res = await getMarketCategories(marketId);
         // console.log("res categorieslist", res)
@@ -40,7 +41,7 @@ const HomePageTemplate: React.FC = () => {
     const fetchMarketList = async () => {
         const res = await getAllMarkets();
         filterMarketBasedOnLocation(res);
-        setAllMarketsOptions(res.map((m: Market) => ({ label: m.name, value: m._id })));
+        setAllMarkets(res);
         // console.log("data", res)
     }
 
@@ -51,7 +52,7 @@ const HomePageTemplate: React.FC = () => {
     useEffect(() => {
         const marketDetails = getFromLocalStorage('marketDetails') as Market;
         console.log("selectedMarket", selectedMarket)
-        getCategoriesListByMarketId(selectedMarket? selectedMarket : marketDetails._id);
+        getCategoriesListByMarketId(selectedMarket? selectedMarket : marketDetails?._id);
     }, [selectedMarket]);
 
 
@@ -68,7 +69,7 @@ const HomePageTemplate: React.FC = () => {
 
             <div className="">
                 <CustomSelect
-                    options={allMarketsOptions}
+                    options={allMarkets.map((m: Market) => ({ label: m.name, value: m._id }))}
                     value={selectedMarket}
                     onChange={setSelectedMarket}
                     // onInputChange={(val) => {
@@ -82,7 +83,7 @@ const HomePageTemplate: React.FC = () => {
             <ProductCategories categories = {categoriesList} />
 
             <Text variant="h3" className="">Nearby Market</Text>
-            <NearestMarketList />
+            <NearestMarketList currentMarketId={selectedMarket} allMarkets={allMarkets}/>
         </div>
     );
 };
