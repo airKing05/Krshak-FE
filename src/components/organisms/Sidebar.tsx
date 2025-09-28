@@ -9,9 +9,13 @@ const navItems = [
   { label: "Prices", to: "/admin/prices", emoji: "💰" },
 ];
 
-export default function Sidebar() {
+interface SidebarProps {
+  onClose?: () => void;
+}
+
+export default function Sidebar({onClose = () => {}} : SidebarProps){
   return (
-    <aside className="w-64 h-screen bg-white border-r flex flex-col shadow-md">
+    <aside className="w-full md:w-64 h-full  bg-white border-r flex flex-col shadow-md">
       <div className="px-6 py-5 text-2xl font-bold text-blue-600 border-b">
         Admin Panel
       </div>
@@ -30,6 +34,7 @@ export default function Sidebar() {
                   : "text-gray-700 hover:bg-gray-100 hover:text-blue-600"
               }`
             }
+            onClick={onClose}
           >
             <span className="text-lg">{emoji}</span>
             <span>{label}</span>
