@@ -26,9 +26,10 @@ export interface Market {
   name: string;
   city: string;
   district: string;
-  state:string
+  state:string;
+  lat: number;
+  lng: number;
 }
-
 export interface ProductCategory {
   name: string;
   image?: string;

@@ -43,7 +43,7 @@ export async function getHourlyRainForecast(
         precipitationProbability: data.hourly.precipitation_probability[idx],
       };
     })
-    .filter(({ time }) => time >= now && time <= new Date(now.getTime() + hours * 60 * 60 * 1000));
+    .filter(({ time }: any) => time >= now && time <= new Date(now.getTime() + hours * 60 * 60 * 1000));
 
   return filtered;
 }

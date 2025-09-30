@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import NearestMarketList from "../organisms/NearestMarketList";
 import ProductCategories from "../organisms/ProductCategories";
 import Text from "../atoms/Text";
@@ -16,15 +16,26 @@ import { getRainProbability7Days } from "../../services/weather";
 import { getDayByDate, getRainEmoji } from "../../utils/common";
 
 const HomePageTemplate: React.FC = () => {
-    // const cityName = useCityName();
+    const cityName = useCityName();
     const [categoriesList, setCategoryList] = useState([]);
     const [allMarkets, setAllMarkets] = useState([]);
-    const [selectedMarket, setSelectedMarket] = useState(getFromLocalStorage('marketDetails')?._id || null);
+    const [selectedMarketId, setSelectedMarketId] = useState<string | null>(() => {
+        const market = getFromLocalStorage<Market>('marketDetails');
+        return market && typeof market === 'object' ? market._id : null;
+    });
     const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
-    const [selectedMarketDetails, setSelectedMarketDetails] = useState(null);
+    const [selectedMarketDetails, setSelectedMarketDetails] = useState<Market>({
+        _id: "",
+        name: "",
+        city: "",
+        district: "",
+        state:"",
+        lat: 0,
+        lng: 0
+    });
     const [loading, setLoading] = useState(true);
     const [rainData, setRainData] = useState<Array<{ date: string; rainChance: number }>>([]);
-      const [error, setError] = useState<string | null>(null);
+    const [error, setError] = useState<string | null>(null);
 
     // const typedInputMarket = useRef("");
 
@@ -33,7 +44,7 @@ const HomePageTemplate: React.FC = () => {
     //     const apiKey = '579b464db66ec23bdd0000019d440267cc2a4b69502c47bb07a153d5';
     // }
 
-    console.log("......", selectedMarket)
+
     const getCategoriesListByMarketId = async(marketId: string) => {
         const res = await getMarketCategories(marketId);
         // console.log("res categorieslist", res)
@@ -59,26 +70,23 @@ const HomePageTemplate: React.FC = () => {
         fetchMarketList();
     }, []);
 
-    const filterOutSelectedMarketDetails = (selectedMarketId : string) => {
-        console.log("foundedMarket",allMarkets, selectedMarketId )
-
-        const foundedMarket = allMarkets.find((_market) => _market._id === selectedMarketId);
-        setSelectedMarketDetails(foundedMarket)
-    }
-
-    useEffect(() => {
-        const marketDetails = getFromLocalStorage('marketDetails') as Market;
-       
-        getCategoriesListByMarketId(selectedMarket? selectedMarket : marketDetails?._id);
-        filterOutSelectedMarketDetails(selectedMarket? selectedMarket : marketDetails?._id);
-    }, [selectedMarket]);
+    const filterOutSelectedMarketDetails = useCallback((selectedMarketId: string) => {
+        const foundedMarket = allMarkets.find((_market: Market) => _market._id === selectedMarketId);
+        if(foundedMarket){
+            setSelectedMarketDetails(foundedMarket);
+        }
+    }, [allMarkets, setSelectedMarketDetails]);
 
     useEffect(() => {
         const marketDetails = getFromLocalStorage('marketDetails') as Market;
-        filterOutSelectedMarketDetails(selectedMarket? selectedMarket : marketDetails?._id);
-    }, [selectedMarket, allMarkets.length]);
+        getCategoriesListByMarketId(selectedMarketId? selectedMarketId : marketDetails?._id);
+    }, [selectedMarketId]);
 
-     console.log("selectedMarket", selectedMarket, selectedMarketDetails)
+    useEffect(() => {
+        const marketDetails = getFromLocalStorage('marketDetails') as Market;
+        filterOutSelectedMarketDetails(selectedMarketId? selectedMarketId : marketDetails?._id);
+    }, [filterOutSelectedMarketDetails, selectedMarketId]);
+
 
     useEffect(() => {
         const detectLocation = async () => {
@@ -102,29 +110,37 @@ const HomePageTemplate: React.FC = () => {
         detectLocation();
     }, []);
 
-
-    useEffect(() => {
-        console.log("selectedMarketDetails", selectedMarketDetails)
-        if(selectedMarketDetails?.lat || selectedMarketDetails?.lng){
-            async function loadRainData() {
+useEffect(() => {
+    if (
+        selectedMarketDetails &&
+        typeof selectedMarketDetails.lat === 'number' &&
+        typeof selectedMarketDetails.lng === 'number'
+    ) {
+        async function loadRainData() {
             setLoading(true);
-            const data = await getRainProbability7Days(selectedMarketDetails?.lat, selectedMarketDetails?.lng);
+            const data = await getRainProbability7Days(selectedMarketDetails.lat, selectedMarketDetails.lng);
             setRainData(data);
             setLoading(false);
         }
         loadRainData();
-        }
-    }, [selectedMarketDetails?.lat, selectedMarketDetails?.lng]);
+    }
+}, [selectedMarketDetails]);
 
 
-    console.log("rainData", rainData)
+    if(loading){
+        return <div>Loading...</div>
+    }
+
+    if(error){
+        return <div>{error}</div>
+    }
 
     return (
         <div className="p-4 space-y-6">
             <div className="flex gap-2 items-center">
                 <Image src={LocationIcon} className="w-6 h-6" alt="icon"/>
                 <Text variant="h3" className="">
-                    {/* {cityName} */}
+                    {cityName}
                     {/* Kuwarti Mandi, Bundi (Raj.) */}
                 </Text>
             </div>
@@ -134,8 +150,8 @@ const HomePageTemplate: React.FC = () => {
             <div className="">
                 <CustomSelect
                     options={allMarkets.map((m: Market) => ({ label: m.name, value: m._id }))}
-                    value={selectedMarket}
-                    onChange={setSelectedMarket}
+                    value={selectedMarketId}
+                    onChange={setSelectedMarketId}
                     // onInputChange={(val) => {
                     //  typedInputMarket.current = val; 
                     // }}
@@ -159,11 +175,11 @@ const HomePageTemplate: React.FC = () => {
             <ProductCategories categories = {categoriesList} />
 
             <Text variant="h3" className="">Nearby Market</Text>
-            {/* <NearestMarketList 
+            <NearestMarketList 
                 allMarkets={allMarkets}
-                onMarketSelect={(marketId: string) => setSelectedMarket(marketId)}
+                onMarketSelect={(marketId: string) => setSelectedMarketId(marketId)}
                 userLocation={userLocation}
-            /> */}
+            />
         </div>
     );
 };

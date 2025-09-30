@@ -1,10 +1,9 @@
 import Select, { Props as SelectProps, StylesConfig, SingleValue } from "react-select";
 
 type Option = { label: string; value: string };
-
 interface CustomSelectProps extends Omit<SelectProps<Option>, "onChange" | "value"> {
   options: Option[];
-  value: string;
+  value: string | null;
   onChange: (value: string) => void;
   onInputChange? : (input: string) => void;
   placeholder?: string;

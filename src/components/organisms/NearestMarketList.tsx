@@ -1,27 +1,12 @@
 import React, { useEffect, useState } from "react";
-import Card from "../molecules/Card";
-// import { getMarketByMarketId } from "../../services/productService";
-import { getDistanceKm, getFallbackLocation, getUserLocation } from "../../utils/helper";
-import { CurrentWeather, getCurrentWeather, getHourlyRainForecast, getRainForecast, getRainProbability7Days } from "../../services/weather";
-import { getRainEmoji } from "../../utils/common";
+import { getDistanceKm } from "../../utils/helper";
 import NearestMarketCard from "../molecules/NearestMarketCard";
-
-
-
-type Market = {
-  _id: string;
-  name: string;
-  city: string;
-  district: string;
-  state: string;
-  lat: number;
-  lng: number;
-};
+import { Market } from "../../types/common";
 
 interface NearestMarketListProps{
     allMarkets: Market[];
     onMarketSelect: (marketId: string) => void;
-    userLocation: { lat: number; lng: number }
+    userLocation: { lat: number; lng: number } | null
 }
 
 const NearestMarketList: React.FC<NearestMarketListProps> = ({allMarkets, onMarketSelect, userLocation}) => {
