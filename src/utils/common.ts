@@ -27,3 +27,17 @@ export const formatISODateToDDMMYYYY = (isoDateString: string) => {
 
   return `${day}-${month}-${year}`; // Combine into the desired format.
 }
+
+
+export function getRainEmoji(rainChance: number): string {
+  if (rainChance <= 10) return "☀️";
+  if (rainChance <= 40) return "🌤️";
+  if (rainChance <= 70) return "🌧️";
+  return "⛈️";
+}
+
+
+export function getDayByDate(date: string) : string {
+   const myDate = new Date(date);
+   return myDate.toLocaleDateString('en-US', { weekday: 'long' });
+}

@@ -1,5 +1,4 @@
 export function getDistanceKm(lat1: number, lon1: number, lat2: number, lon2: number): number {
-    console.log("111", lat1, lon1, "222", lat2, lon2)
   const R = 6371; // Radius of Earth in KM
   const dLat = (lat2 - lat1) * (Math.PI / 180);
   const dLon = (lon2 - lon1) * (Math.PI / 180);
@@ -42,6 +41,16 @@ export const getUserLocation = () => {
 
 
 export async function getFallbackLocation(): Promise<{ lat: number; lng: number } | null> {
+
+  // ✅ Hardcoded location (Chandanheli, Bundi, Rajasthan)
+  if (import.meta.env.VITE_USE_DEV_LOCATION === 'true') {
+    console.log("🌍 Using hardcoded location (DEV)");
+    return {
+     lat: 25.30221,
+     lng: 75.84167
+    };
+  }
+
   try {
     const res = await fetch("https://ipapi.co/json/");
     const data = await res.json();

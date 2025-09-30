@@ -10,9 +10,10 @@ interface CardProps {
     showWishButton?: boolean;
     // id: string | number | undefined;
     handleClick?: () => void;
+    info?: string;
 }
 
-const Card: React.FC<CardProps> = ({ imageUrl, title, subtitle, maxPrice, showWishButton, distance, handleClick }) => {
+const Card: React.FC<CardProps> = ({ imageUrl, title, subtitle, maxPrice, showWishButton, distance, handleClick, info }) => {
     return (
         <div 
           onClick={handleClick}
@@ -30,6 +31,7 @@ const Card: React.FC<CardProps> = ({ imageUrl, title, subtitle, maxPrice, showWi
                 {subtitle && <Text className="text-sm text-gray-500 mt-1" >{subtitle}</Text>}
                 {maxPrice && <Text className="text-base text-green-600 font-semibold mt-2" >₹{maxPrice}</Text>}
                 {distance && <Text className="text-base text-green-600 font-semibold mt-2" >{distance}</Text>}
+                {info && <Text className="font-semibold text-gray-900 truncate" >{info}</Text>}
             </div>
 
             {/* Wishlist Button */}

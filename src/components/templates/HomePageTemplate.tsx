@@ -10,12 +10,22 @@ import { getMarketCategories } from "../../services/productService";
 import { getFromLocalStorage, setToLocalStorage } from "../../utils/localStorage";
 import CustomSelect from "../atoms/CustomSelect";
 import { Market } from "../../types/common";
+import WeatherCard from "../molecules/WeatherCard";
+import { getFallbackLocation, getUserLocation } from "../../utils/helper";
+import { getRainProbability7Days } from "../../services/weather";
+import { getDayByDate, getRainEmoji } from "../../utils/common";
 
 const HomePageTemplate: React.FC = () => {
-    const cityName = useCityName();
+    // const cityName = useCityName();
     const [categoriesList, setCategoryList] = useState([]);
     const [allMarkets, setAllMarkets] = useState([]);
     const [selectedMarket, setSelectedMarket] = useState(getFromLocalStorage('marketDetails')?._id || null);
+    const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
+    const [selectedMarketDetails, setSelectedMarketDetails] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [rainData, setRainData] = useState<Array<{ date: string; rainChance: number }>>([]);
+      const [error, setError] = useState<string | null>(null);
+
     // const typedInputMarket = useRef("");
 
     // const fetchMandiData = () => {
@@ -49,23 +59,77 @@ const HomePageTemplate: React.FC = () => {
         fetchMarketList();
     }, []);
 
+    const filterOutSelectedMarketDetails = (selectedMarketId : string) => {
+        console.log("foundedMarket",allMarkets, selectedMarketId )
+
+        const foundedMarket = allMarkets.find((_market) => _market._id === selectedMarketId);
+        setSelectedMarketDetails(foundedMarket)
+    }
+
     useEffect(() => {
         const marketDetails = getFromLocalStorage('marketDetails') as Market;
-        console.log("selectedMarket", selectedMarket)
+       
         getCategoriesListByMarketId(selectedMarket? selectedMarket : marketDetails?._id);
+        filterOutSelectedMarketDetails(selectedMarket? selectedMarket : marketDetails?._id);
     }, [selectedMarket]);
 
+    useEffect(() => {
+        const marketDetails = getFromLocalStorage('marketDetails') as Market;
+        filterOutSelectedMarketDetails(selectedMarket? selectedMarket : marketDetails?._id);
+    }, [selectedMarket, allMarkets.length]);
 
+     console.log("selectedMarket", selectedMarket, selectedMarketDetails)
+
+    useEffect(() => {
+        const detectLocation = async () => {
+          try {
+            const geoLoc = await getUserLocation();
+            console.log("📍 Geolocation success:", geoLoc);
+            setUserLocation(geoLoc);
+          } catch (geoError) {
+            console.warn("❌ Geolocation failed, trying fallback:", geoError);
+    
+            const fallbackLoc = await getFallbackLocation();
+            if (fallbackLoc) {
+              console.log("📍 IP-based fallback location:", fallbackLoc);
+              setUserLocation(fallbackLoc);
+            } else {
+              setError("Could not detect your location.");
+            }
+          }
+        };
+    
+        detectLocation();
+    }, []);
+
+
+    useEffect(() => {
+        console.log("selectedMarketDetails", selectedMarketDetails)
+        if(selectedMarketDetails?.lat || selectedMarketDetails?.lng){
+            async function loadRainData() {
+            setLoading(true);
+            const data = await getRainProbability7Days(selectedMarketDetails?.lat, selectedMarketDetails?.lng);
+            setRainData(data);
+            setLoading(false);
+        }
+        loadRainData();
+        }
+    }, [selectedMarketDetails?.lat, selectedMarketDetails?.lng]);
+
+
+    console.log("rainData", rainData)
 
     return (
         <div className="p-4 space-y-6">
             <div className="flex gap-2 items-center">
                 <Image src={LocationIcon} className="w-6 h-6" alt="icon"/>
                 <Text variant="h3" className="">
-                    {cityName}
+                    {/* {cityName} */}
                     {/* Kuwarti Mandi, Bundi (Raj.) */}
                 </Text>
             </div>
+
+
 
             <div className="">
                 <CustomSelect
@@ -78,12 +142,28 @@ const HomePageTemplate: React.FC = () => {
                     placeholder="Select or type..."
                 />
             </div>
+
+            <Text variant="h3" className="">Available Categories</Text>
+            <div className="flex overflow-x-auto p-4 space-x-4 custom-scrollbar justify-center"> {/* Added custom-scrollbar for better UX */}
+                {rainData.map((weather, index) => (
+                    <WeatherCard
+                        key={index}
+                        day={getDayByDate(weather.date)}
+                        icon={getRainEmoji(weather.rainChance)}
+                        rainChance={weather.rainChance + '%'}
+                    />
+                ))}
+            </div>
             
             <Text variant="h3" className="">Available Categories</Text>
             <ProductCategories categories = {categoriesList} />
 
             <Text variant="h3" className="">Nearby Market</Text>
-            <NearestMarketList currentMarketId={selectedMarket} allMarkets={allMarkets}/>
+            {/* <NearestMarketList 
+                allMarkets={allMarkets}
+                onMarketSelect={(marketId: string) => setSelectedMarket(marketId)}
+                userLocation={userLocation}
+            /> */}
         </div>
     );
 };
