@@ -16,7 +16,7 @@ const initialFilters = {
   categoryId: 'all',  // '68825af9b3d068cc2b8e2ba3',
   date: new Date().toISOString().split('T')[0],
 }
-const PageSize = 5;
+const PageSize = 20;
 
 function Comparison() {
   const [allMarketsOptions, setAllMarketsOptions] = useState([]);
@@ -41,22 +41,47 @@ function Comparison() {
     fetchCategoriesOptions();
   }, [])
 
-  const fetchCompareData = async () => {
-    const res = await getCompareProductPriceOf2Markets({...filters, page, limit: PageSize,});
 
-    if (res.length < PageSize) setHasMore(false);
-    setComparedData(res);
-    setPage((prev) => prev + 1);
+// Log when filters change
+useEffect(() => {
+  console.log("Filters changed:", filters);
+}, [filters]);
 
+// Reset paging and data when filters change
+useEffect(() => {
+  setPage(1);
+  setComparedData([]);
+  setHasMore(true);
+}, [filters]);
+
+// Fetch data whenever page changes
+useEffect(() => {
+  fetchCompareData();
+}, [page, filters]);
+
+// Log when page changes
+useEffect(() => {
+  console.log("Page changed:", page);
+}, [page]);
+
+const fetchCompareData = async () => {
+  console.log("Fetching with filters:", filters, "Page:", page);
+
+  const res = await getCompareProductPriceOf2Markets({
+    ...filters,
+    page,
+    limit: PageSize,
+  });
+
+  if (res.length < PageSize) {
+    setHasMore(false);
   }
 
-  useEffect(() => {
-    setPage(1);
-    setHasMore(true);
-    setComparedData([]);
-    fetchCompareData();
-  }, [filters]);
-  
+  setComparedData((prev) =>
+    page === 1 ? res : [...prev, ...res]
+  );
+};
+
 
   const handleChangeFilters = (e: { target: { name: string; value: string } }) => {
     setFilters((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -87,7 +112,7 @@ function Comparison() {
       </div>
       <InfiniteScroll
         dataLength={comparedData.length}
-        next={fetchCompareData}
+        next={() => setPage(prev => prev + 1)}
         hasMore={hasMore}
         loader={<p className="text-center py-4 text-sm text-gray-500">Loading more...</p>}
         scrollThreshold={0.9}
