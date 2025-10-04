@@ -1,3 +1,6 @@
+// for more info
+//const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&daily=precipitation_probability_max,precipitation_probability_mean,rain_sum,precipitation_sum,precipitation_hours&timezone=auto`;
+
 export async function getRainProbability7Days(
   lat: number,
   lng: number
@@ -13,6 +16,29 @@ export async function getRainProbability7Days(
     rainChance: data.daily.precipitation_probability_max[index],
   }));
 }
+
+
+export async function getTodayDailyRainSummary(
+  lat: number,
+  lng: number
+): Promise<{
+  date: string;
+  totalPrecipitation: number; // mm
+  avgPrecipitationProbability: number; // %
+}> {
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&daily=precipitation_sum,precipitation_probability_mean&timezone=auto`;
+
+  const res = await fetch(url);
+  const data = await res.json();
+
+  // First day = today
+  return {
+    date: data.daily.time[0],
+    totalPrecipitation: data.daily.precipitation_sum[0],
+    avgPrecipitationProbability: data.daily.precipitation_probability_mean[0],
+  };
+}
+
 
 
 export async function getHourlyRainForecast(

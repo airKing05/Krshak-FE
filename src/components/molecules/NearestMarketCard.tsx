@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Card from "./Card";
-import { getHourlyRainForecast } from "../../services/weather";
+import { getTodayDailyRainSummary } from "../../services/weather";
 import { getRainEmoji } from "../../utils/common";
 
 interface NearestMarketCardProps {
@@ -24,9 +24,9 @@ export default function NearestMarketCard({
   useEffect(() => {
     if (latitude && longitude) {
       async function fetchHourlyRain() {
-        const data = await getHourlyRainForecast(latitude, longitude, 1);
-        const info = `Possibility of rain - ${getRainEmoji(data[0]?.precipitationProbability)} ${
-          data[0]?.precipitationProbability
+        const data = await getTodayDailyRainSummary(latitude, longitude);
+        const info = `Average possibility of rain - ${getRainEmoji(data?.avgPrecipitationProbability)} ${
+          data?.avgPrecipitationProbability
         }%`;
         setRainInfo(info)
       }

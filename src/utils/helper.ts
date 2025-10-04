@@ -1,3 +1,25 @@
+// export async function getDrivingDistanceORS(
+//   lat1: number,
+//   lon1: number,
+//   lat2: number,
+//   lon2: number
+// ): Promise<{ distanceKm: number; durationMinutes: number }> {
+// form env ORS_ROUTE_KEY
+//   const url = `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${apiKey}&start=${lon1},${lat1}&end=${lon2},${lat2}`;
+
+//   const res = await fetch(url);
+//   const data = await res.json();
+
+//   const segment = data.features[0].properties.segments[0];
+
+//   return {
+//     distanceKm: segment.distance / 1000,         // meters → kilometers
+//     durationMinutes: segment.duration / 60       // seconds → minutes
+//   };
+// }
+
+
+
 export function getDistanceKm(lat1: number, lon1: number, lat2: number, lon2: number): number {
   const R = 6371; // Radius of Earth in KM
   const dLat = (lat2 - lat1) * (Math.PI / 180);
@@ -13,6 +35,7 @@ export function getDistanceKm(lat1: number, lon1: number, lat2: number, lon2: nu
 
   return R * c;
 }
+
 
 export const getUserLocation = () => {
     return new Promise<{ lat: number; lng: number }>((resolve, reject) => {
