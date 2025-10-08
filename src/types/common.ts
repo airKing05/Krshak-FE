@@ -59,5 +59,6 @@ export interface ProductDetailsType {
 export interface DetailedProduct extends Product {
   marketId: string;
   latestMaxPrice: number;
+  imgUrl?: string;
   _id:string;
 }
