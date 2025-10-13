@@ -1,7 +1,7 @@
 // src/services/adminService.ts
 import axios from "axios";
 
-const API = "http://192.168.43.83:5001/api/v1";
+const API = "https://krshak.onrender.com/api/v1" //"http://192.168.43.83:5001/api/v1";
 
 interface PriceData {
   productId: string
