@@ -11,6 +11,7 @@ import { useEffect } from 'react'
 import { getFromLocalStorage } from './utils/localStorage'
 import { isTokenValid } from './utils/auth'
 import ProtectedRoute from './routes/ProtectedRoute'
+import WeatherPage from './pages/Weather'
 
 function App() {
 
@@ -34,6 +35,7 @@ function App() {
           <Route path='/products/:categoryId' element={<Category />} />
           <Route path='/product-details/:productId' element={<Product />} />
           <Route path='/comparison' element={<Comparison />} />
+          <Route path='/weather' element={<WeatherPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route
             path="/admin/*"

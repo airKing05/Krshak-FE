@@ -75,3 +75,54 @@ export async function getHourlyRainForecast(
 }
 
 
+
+
+
+
+
+// services/weather.ts
+
+const BASE_URL = 'https://api.open-meteo.com/v1/forecast';
+// lat: 25.30221,
+//      lng: 75.84167
+export const getWeatherData = async (lat: number, lng: number) => {
+  const params = new URLSearchParams({
+    latitude: '25.30221', // lat.toString(),
+    longitude: '75.84167', //lng.toString(),
+    current_weather: 'true',
+    hourly: [
+      'temperature_2m',
+      'precipitation_probability',
+      'precipitation',
+      'snowfall',
+      'wind_speed_10m',
+      'relative_humidity_2m',
+    
+    ].join(','),
+    daily: [
+      'temperature_2m_max',
+      'temperature_2m_min',
+      'weathercode',
+      'precipitation_sum',
+      'snowfall_sum',
+      'precipitation_probability_max',
+      'sunrise',
+      'sunset'
+    ].join(','),
+    timezone: 'auto',
+  });
+  const url = `${BASE_URL}?${params.toString()}`;
+
+  try {
+    const res = await fetch(url);
+    if (!res.ok) {
+      throw new Error(`Weather API error: ${res.status}`);
+    }
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error('Failed to fetch weather data:', error);
+    throw error;
+  }
+};
+

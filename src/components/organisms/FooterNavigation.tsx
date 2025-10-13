@@ -5,6 +5,8 @@ import CategoryIcon from '../../assets/icons/categoryStack.svg';
 import ComparisonIcon from '../../assets/icons/comparison.svg';
 import BackIcon from '../../assets/icons/LeftCircleArrow.svg';
 import Logo from '../../assets/icons/LOGO.svg';
+import WeatherIcon from '../../assets/icons/weather.svg';
+
 
 const FooterNavigation: React.FC = () => {
     const location = useLocation();
@@ -30,6 +32,7 @@ const FooterNavigation: React.FC = () => {
         { to: "/products/all", icon: CategoryIcon, label: "Products" },
         // { to: "/products/Product%20A1", icon: ProductIcon, label: "Product" },
         { to: "/comparison", icon: ComparisonIcon, label: "Compare" },
+        { to: "/weather", icon: WeatherIcon, label: "Weather" },
     ];
 
     return (
