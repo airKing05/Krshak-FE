@@ -87,8 +87,8 @@ const BASE_URL = 'https://api.open-meteo.com/v1/forecast';
 //      lng: 75.84167
 export const getWeatherData = async (lat: number, lng: number) => {
   const params = new URLSearchParams({
-    latitude: '25.30221', // lat.toString(),
-    longitude: '75.84167', //lng.toString(),
+    latitude: lat.toString(),
+    longitude: lng.toString(),
     current_weather: 'true',
     hourly: [
       'temperature_2m',

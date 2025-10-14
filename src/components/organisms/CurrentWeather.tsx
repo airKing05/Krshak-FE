@@ -13,7 +13,7 @@ const getWeatherBackground = (code: number) => {
 
 const CurrentWeather = ({ current, daily }: Props) => {
   console.log("current, daily", current, daily)
-  const bgClass = '' //getWeatherBackground(current.weathercode);
+  const bgClass = getWeatherBackground(current.precipitation);
 
   return (
     <div className={`p-6 rounded-md ${bgClass}`}>
