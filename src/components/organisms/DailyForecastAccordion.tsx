@@ -14,7 +14,7 @@ const DailyForecastAccordion = ({ daily }: Props) => {
 
   return (
     <div className="mt-8 max-w-4xl mx-auto px-4 sm:px-6 lg:px-0">
-      <h2 className="text-3xl font-semibold text-gray-800 mb-6">7-Day Forecast</h2>
+      <h3 className="text-2xl font-semibold text-gray-800 mb-6">7-Day Forecast</h3>
       <div className="space-y-4">
         {daily.time.map((date: string, idx: number) => {
           const isOpen = expandedIndex === idx;

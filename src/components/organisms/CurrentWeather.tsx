@@ -17,7 +17,6 @@ const CurrentWeather = ({ current, daily }: Props) => {
 
   return (
     <div className={`p-6 rounded-md ${bgClass}`}>
-      <div className="text-xl font-bold mb-2">Current Weather</div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div>🌡️ Temp: {current.temperature}°C</div>
         <div>💨 Wind: {current.windspeed} km/h</div>

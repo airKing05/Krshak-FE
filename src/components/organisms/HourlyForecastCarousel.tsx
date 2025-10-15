@@ -1,12 +1,22 @@
+// components/HourlyForecastCarousel.tsx
+
+import React from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { getRainEmoji } from "../../utils/common";
+import { useResponsiveSlidePercentage } from "../../hooks/useResponsiveSlidePercentage";
 
 type Props = {
-  hourly: any;
+  hourly: {
+    time: string[];
+    temperature_2m: number[];
+    precipitation_probability: number[];
+  };
 };
 
-const HourlyForecastCarousel = ({ hourly }: Props) => {
+const HourlyForecastCarousel: React.FC<Props> = ({ hourly }) => {
+  const slidePercentage = useResponsiveSlidePercentage();
+
   const hourlyItems = hourly.time.slice(0, 24).map((time: string, idx: number) => {
     const hour = new Date(time).toLocaleTimeString([], {
       hour: "2-digit",
@@ -19,22 +29,24 @@ const HourlyForecastCarousel = ({ hourly }: Props) => {
     return (
       <div
         key={idx}
-        className="bg-white border border-gray-200 shadow rounded-xl p-4 w-full max-w-[160px] mx-auto"
+        className="bg-white border border-gray-200 shadow-sm rounded-xl py-4 px-0 w-full max-w-[110px] mx-auto"
       >
-        <div className="text-sm text-gray-500">{hour}</div>
-        <div className="text-2xl font-semibold text-gray-800 mt-1">
+        <div className="text-sm text-gray-500 text-center">{hour}</div>
+        <div className="text-xl font-semibold text-gray-800 mt-1 text-center">
           🌡️ {temp}°C
         </div>
-        <div className="text-sm text-blue-600 mt-1">{getRainEmoji(rain)} {rain}% rain</div>
+        <div className="text-sm text-blue-600 mt-1 text-center">
+          {getRainEmoji(rain)} {rain}% rain
+        </div>
       </div>
     );
   });
 
   return (
-    <div className="mt-8 px-4 md:px-8">
-      <h2 className="text-xl font-semibold text-gray-800 mb-4">
+    <div className="mt-8 px-4 sm:px-6 max-w-5xl mx-auto">
+      <h3 className="text-2xl font-semibold text-gray-800 mb-4">
         Hourly Forecast
-      </h2>
+      </h3>
 
       <Carousel
         showThumbs={false}
@@ -44,11 +56,11 @@ const HourlyForecastCarousel = ({ hourly }: Props) => {
         autoPlay
         interval={2500}
         transitionTime={600}
-        stopOnHover={true}
+        stopOnHover
         swipeable
         emulateTouch
         centerMode
-        centerSlidePercentage={30}
+        centerSlidePercentage={slidePercentage}
         className="w-full"
       >
         {hourlyItems}
