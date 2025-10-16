@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ProductDetails from "../molecules/ProductDetails";
-import CustomCarousel from "../organisms/CustomCarousal";
+// import CustomCarousel from "../organisms/CustomCarousal";
 import DateWisePriceList from "../organisms/DateWisePriceList";
 import LineChart from "../charts/LineChart";
 import { getSingleProductDetail } from "../../services/productService";
@@ -9,21 +9,21 @@ import { getFromLocalStorage } from "../../utils/localStorage";
 import { formatISODateToDDMMYYYY } from "../../utils/common";
 import { Market, ProductDetailsType } from "../../types/common";
 
-const carousalData = [
-    {
-        imageUrl: "https://www.en.krishakjagat.org/wp-content/uploads/2022/10/syn432-768x427.jpg",
-        title: 'image-1',
-    },
-    {
-        imageUrl: "https://www.epicgardening.com/wp-content/uploads/2024/10/farmer-holding-wheat-seeds.jpg",
-        title: 'image-2',
+// const carousalData = [
+//     {
+//         imageUrl: "https://www.en.krishakjagat.org/wp-content/uploads/2022/10/syn432-768x427.jpg",
+//         title: 'image-1',
+//     },
+//     {
+//         imageUrl: "https://www.epicgardening.com/wp-content/uploads/2024/10/farmer-holding-wheat-seeds.jpg",
+//         title: 'image-2',
 
-    },
-    {
-        imageUrl: "https://www.par.com.pk/assets/images/wheat_pg.webp",
-        title: 'image-3',
-    }
-]
+//     },
+//     {
+//         imageUrl: "https://www.par.com.pk/assets/images/wheat_pg.webp",
+//         title: 'image-3',
+//     }
+// ]
 
 const formattedPriceDataForGraph = (price?: ProductDetailsType['price']) =>  price?.length? price.map((_price) => [formatISODateToDDMMYYYY(_price.date), _price.maxPrice]): []
 
@@ -36,7 +36,6 @@ const ProductPageTemplate: React.FC = () => {
         const marketDetails = getFromLocalStorage('marketDetails') as Market;
         const res = await getSingleProductDetail(marketDetails._id, productId);
         setProductDetails(() => ({...res, market: marketDetails}));
-        console.log("data", res)
     }
 
     useEffect(() => {
@@ -63,7 +62,7 @@ const ProductPageTemplate: React.FC = () => {
             {/* Other sections will be added later */}
 
             {/* product's available images slider */}
-            <CustomCarousel data={carousalData}/>
+            {/* <CustomCarousel data={carousalData}/> */}
 
             {/* product's last 6 days price list */}
             <DateWisePriceList price={productDetails?.price}/>

@@ -20,6 +20,7 @@ interface ProductListProps{
 }
 const ProductList: React.FC<ProductListProps> = ({productsList}) => {
     const [products, setProducts] = useState<DetailedProduct[]>([...productsList]);
+    const [hasMore, setHasMore] = useState(true);
    // we have data still it is not able to render on first time load 
 
     useEffect(() => {
@@ -29,21 +30,26 @@ const ProductList: React.FC<ProductListProps> = ({productsList}) => {
     const navigate = useNavigate();
 
     const fetchMoreData = () => {
-        setTimeout(() => {
-            setProducts((prev) => [
-                ...prev,
-                {
-                  category: {
-                    name:  "gehu",
-                    _id: "68825af9b3d068cc2b8e2ba3"
-                  },
-                  latestMaxPrice: 2800,
-                  marketId: "68839617d93a5d7d8bb59dd7",
-                  name: '4037',
-                  _id: "688262eb1b65ac84ede76259aaaaa"
-                }
-            ]);
-        }, 1000);
+        // TODO: Call api for infinite scrolling 
+        // setTimeout(() => {
+        //     setProducts((prev) => [
+        //         ...prev,
+        //         {
+        //           category: {
+        //             name:  "gehu",
+        //             _id: "68825af9b3d068cc2b8e2ba3"
+        //           },
+        //           latestMaxPrice: 2800,
+        //           marketId: "68839617d93a5d7d8bb59dd7",
+        //           name: '4037',
+        //           _id: "688262eb1b65ac84ede76259aaaaa"
+        //         }
+        //     ]);
+        // }, 1000);
+
+        setTimeout(()=> {
+           setHasMore(false);
+        }, 500)
     };
 
     const handleProductClicked = (productId: string) => {
@@ -51,7 +57,7 @@ const ProductList: React.FC<ProductListProps> = ({productsList}) => {
     }
 
     return (
-        <InfiniteScroll dataLength={products.length} next={fetchMoreData} hasMore={true} loader={<p>Loading...</p>}>
+        <InfiniteScroll dataLength={products.length} next={fetchMoreData} hasMore={hasMore} loader={<p>Loading...</p>}>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-10">
                 {products.map((item) => (
                    <React.Fragment key={item._id} >
@@ -60,7 +66,6 @@ const ProductList: React.FC<ProductListProps> = ({productsList}) => {
                             title={item.name} 
                             subtitle={item.category.name} 
                             maxPrice={item.latestMaxPrice} 
-                            showWishButton
                             handleClick={() => handleProductClicked(item._id)}
                         />
                    </React.Fragment>

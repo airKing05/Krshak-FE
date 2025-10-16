@@ -2,6 +2,7 @@ import React from "react";
 import Text from "../atoms/Text";
 
 interface CardProps {
+    bgCard?: React.FC; 
     imageUrl?: string | undefined;
     title: string;
     subtitle?: string;
@@ -13,18 +14,20 @@ interface CardProps {
     info?: string;
 }
 
-const Card: React.FC<CardProps> = ({ imageUrl, title, subtitle, maxPrice, showWishButton, distance, handleClick, info }) => {
+const Card: React.FC<CardProps> = ({ imageUrl, title, subtitle, maxPrice, showWishButton, distance, handleClick, info, bgCard:BgCard }) => {
     return (
         <div 
           onClick={handleClick}
           className="w-full flex items-center bg-white shadow-lg rounded-lg p-4 space-x-4 relative"
         >
             {/* Image */}
-            <img
+            {imageUrl &&  <img
                 src={imageUrl}
                 alt={title}
                 className="w-34 h-34 rounded-md object-cover"
-            />
+            /> }
+           
+            {BgCard && <BgCard />}
 
             <div className="flex-1">
                 <Text variant="h3" className="text-lg font-semibold text-gray-900 truncate" >{title}</Text>
