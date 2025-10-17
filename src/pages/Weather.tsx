@@ -4,15 +4,42 @@ import { getWeatherData } from '../services/weather';
 import CurrentWeather from '../components/organisms/CurrentWeather';
 import HourlyForecastCarousel from '../components/organisms/HourlyForecastCarousel';
 import DailyForecastAccordion from '../components/organisms/DailyForecastAccordion';
+import { getFallbackLocation, getUserLocation } from '../utils/helper';
 
 const WeatherPage = () => {
   const [weather, setWeather] = useState<any>(null);
+  const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  
+  
 
   useEffect(() => {
-    const fetchWeather = async () => {
+      const detectLocation = async () => {
+        try {
+          const geoLoc = await getUserLocation();
+          console.log("📍 Geolocation success:", geoLoc);
+          setUserLocation(geoLoc);
+        } catch (geoError) {
+          console.warn("❌ Geolocation failed, trying fallback:", geoError);
+  
+          const fallbackLoc = await getFallbackLocation();
+          if (fallbackLoc) {
+            console.log("📍 IP-based fallback location:", fallbackLoc);
+            setUserLocation(fallbackLoc);
+          } else {
+            setError("Could not detect your location.");
+          }
+        }
+      };
+  
+      detectLocation();
+  }, []);
+
+  useEffect(() => {
+    const fetchWeather = async () => { 
       try {
-        const lat = 40.7128;
-        const lng = -74.0060;
+        const lat = userLocation?.lat;  //40.7128;
+        const lng = userLocation?.lng; //-74.0060;
         const data = await getWeatherData(lat, lng);
 
         // Find current hour index in hourly data
@@ -22,8 +49,6 @@ const WeatherPage = () => {
 
         // Safeguard fallback
         const idx = index !== -1 ? index : 0;
-
-        console.log("index",currentHour, index, idx)
 
         const extendedCurrent = {
           time: data.current_weather.time,
@@ -37,9 +62,6 @@ const WeatherPage = () => {
           precipitation_probability: data.hourly.precipitation_probability[idx],
         };
 
-        console.log("extendedCurrent", extendedCurrent)
-
-
         setWeather({
           current: extendedCurrent,
           hourly: data.hourly,
@@ -52,9 +74,11 @@ const WeatherPage = () => {
     }
 
     fetchWeather();
-  }, []);
+  }, [userLocation]);
 
-  console.log("weather", weather)
+  if(error){
+    return <div className="text-center mt-10 text-red-400">{error}</div>
+  }
 
   if (!weather) return <div className="text-center mt-10 text-gray-600">Loading...</div>;
 

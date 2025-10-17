@@ -67,7 +67,6 @@ export async function getFallbackLocation(): Promise<{ lat: number; lng: number 
 
   // ✅ Hardcoded location (Chandanheli, Bundi, Rajasthan)
   if (import.meta.env.VITE_USE_DEV_LOCATION === 'true') {
-    console.log("🌍 Using hardcoded location (DEV)");
     return {
      lat: 25.30221,
      lng: 75.84167

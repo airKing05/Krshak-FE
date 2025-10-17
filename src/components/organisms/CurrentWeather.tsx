@@ -12,15 +12,14 @@ const getWeatherBackground = (code: number) => {
 };
 
 const CurrentWeather = ({ current, daily }: Props) => {
-  console.log("current, daily", current, daily)
   const bgClass = getWeatherBackground(current.precipitation);
 
   return (
-    <div className={`p-6 rounded-md ${bgClass}`}>
+    <div className={`p-6 ${bgClass}`}>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div>🌡️ Temp: {current.temperature}°C</div>
         <div>💨 Wind: {current.windspeed} km/h</div>
-        <div>💧 Humidity: {current.humidity_2m}%</div>
+        {/* <div>💧 Humidity: {current.humidity_2m}%</div> */}
         <div>☁️ Fog: {current.fog ? 'Yes' : 'No'}</div>
         <div>🌧️ Rain: {current.precipitation} mm</div>
         <div>🌨️ Snow: {current.snowfall} mm</div>
