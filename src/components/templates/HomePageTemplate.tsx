@@ -112,21 +112,21 @@ const HomePageTemplate: React.FC = () => {
         detectLocation();
     }, []);
 
-// useEffect(() => {
-//     if (
-//         selectedMarketDetails &&
-//         typeof selectedMarketDetails.lat === 'number' &&
-//         typeof selectedMarketDetails.lng === 'number'
-//     ) {
-//         async function loadRainData() {
-//             setLoading(true);
-//             const data = await getRainProbability7Days(selectedMarketDetails.lat, selectedMarketDetails.lng);
-//             setRainData(data);
-//             setLoading(false);
-//         }
-//         loadRainData();
-//     }
-// }, [selectedMarketDetails]);
+    useEffect(() => {
+        if (
+            selectedMarketDetails &&
+            typeof selectedMarketDetails.lat === 'number' &&
+            typeof selectedMarketDetails.lng === 'number'
+        ) {
+            async function loadRainData() {
+                setLoading(true);
+                const data = await getRainProbability7Days(selectedMarketDetails.lat, selectedMarketDetails.lng);
+                setRainData(data);
+                setLoading(false);
+            }
+            loadRainData();
+        }
+    }, [selectedMarketDetails]);
 
 
     if(loading){
@@ -177,11 +177,11 @@ const HomePageTemplate: React.FC = () => {
             <ProductCategories categories = {categoriesList} />
 
             <Text variant="h3" className="">Nearby Market</Text>
-            {/* <NearestMarketList 
+            <NearestMarketList 
                 allMarkets={allMarkets}
                 onMarketSelect={(marketId: string) => setSelectedMarketId(marketId)}
                 userLocation={userLocation}
-            /> */}
+            />
         </div>
     );
 };
