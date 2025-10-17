@@ -14,11 +14,6 @@ const CategoryPageTemplate: React.FC = () => {
     const [inputCategory, setInputCategory] = useState(params?.categoryId || "");
     const [categoriesOptions, setCategoryOptions] = useState<Option[]>([]);
 
-    console.log("params", params);
-    console.log("productsList", productsList)
-    console.log("categoriesOptions", categoriesOptions)
-
-
     const handleProductSearch = useRef(
         debounce((value: string) => {
             fetchMarketProductsList(inputCategory, value)
