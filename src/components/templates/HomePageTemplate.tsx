@@ -33,7 +33,7 @@ const HomePageTemplate: React.FC = () => {
         lat: 0,
         lng: 0
     });
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [rainData, setRainData] = useState<Array<{ date: string; rainChance: number }>>([]);
     const [error, setError] = useState<string | null>(null);
 
@@ -74,6 +74,8 @@ const HomePageTemplate: React.FC = () => {
         const foundedMarket = allMarkets.find((_market: Market) => _market._id === selectedMarketId);
         if(foundedMarket){
             setSelectedMarketDetails(foundedMarket);
+            setToLocalStorage('marketDetails', foundedMarket)
+            
         }
     }, [allMarkets, setSelectedMarketDetails]);
 
@@ -110,21 +112,21 @@ const HomePageTemplate: React.FC = () => {
         detectLocation();
     }, []);
 
-useEffect(() => {
-    if (
-        selectedMarketDetails &&
-        typeof selectedMarketDetails.lat === 'number' &&
-        typeof selectedMarketDetails.lng === 'number'
-    ) {
-        async function loadRainData() {
-            setLoading(true);
-            const data = await getRainProbability7Days(selectedMarketDetails.lat, selectedMarketDetails.lng);
-            setRainData(data);
-            setLoading(false);
-        }
-        loadRainData();
-    }
-}, [selectedMarketDetails]);
+// useEffect(() => {
+//     if (
+//         selectedMarketDetails &&
+//         typeof selectedMarketDetails.lat === 'number' &&
+//         typeof selectedMarketDetails.lng === 'number'
+//     ) {
+//         async function loadRainData() {
+//             setLoading(true);
+//             const data = await getRainProbability7Days(selectedMarketDetails.lat, selectedMarketDetails.lng);
+//             setRainData(data);
+//             setLoading(false);
+//         }
+//         loadRainData();
+//     }
+// }, [selectedMarketDetails]);
 
 
     if(loading){
@@ -175,11 +177,11 @@ useEffect(() => {
             <ProductCategories categories = {categoriesList} />
 
             <Text variant="h3" className="">Nearby Market</Text>
-            <NearestMarketList 
+            {/* <NearestMarketList 
                 allMarkets={allMarkets}
                 onMarketSelect={(marketId: string) => setSelectedMarketId(marketId)}
                 userLocation={userLocation}
-            />
+            /> */}
         </div>
     );
 };

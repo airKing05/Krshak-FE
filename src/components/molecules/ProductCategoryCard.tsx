@@ -54,7 +54,7 @@ const ProductCategoryCard: React.FC<ProductCategoryCardProps> = (props) => {
         />
       </div>
 
-      <Text variant="h3" className="font-extrabold text-2xl mt-3 text-center">
+      <Text variant="h3" className="font-extrabold text-2xl mt-3 text-center capitalize">
         {name}
       </Text>
     </div>

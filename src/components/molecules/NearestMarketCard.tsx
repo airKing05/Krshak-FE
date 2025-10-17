@@ -7,6 +7,7 @@ import Text from "../atoms/Text";
 interface NearestMarketCardProps {
   imageUrl?: string | undefined;
   title: string;
+  city: string;
   distance?: string;
   handleClick?: () => void;
   latitude: number;
@@ -15,6 +16,7 @@ interface NearestMarketCardProps {
 
 export default function NearestMarketCard({
   title,
+  city,
   distance,
   handleClick,
   latitude,
@@ -35,8 +37,8 @@ export default function NearestMarketCard({
   }, [latitude, longitude]);
 
   const bgCard = () => {
-    return <div className="w-48 h-24 rounded-md bg-amber-100 flex justify-center items-center">
-      <Text>Bundi</Text>
+    return <div className="w-48 h-24 max-w-48 rounded-md bg-amber-100 flex justify-center items-center">
+      <Text className="capitalize">{city}</Text>
     </div>
   }
   return (

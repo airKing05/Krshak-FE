@@ -22,6 +22,14 @@ const customStyles: StylesConfig<Option> = {
     ...base,
     zIndex: 30,
   }),
+  option: (base) => ({
+    ...base,
+    textTransform: "capitalize", 
+  }),
+  singleValue: (base) => ({
+    ...base,
+    textTransform: "capitalize", 
+  }),
 };
 
 const CustomSelect: React.FC<CustomSelectProps> = ({ options, value, onChange, placeholder,onInputChange, ...rest }) => {

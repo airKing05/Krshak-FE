@@ -41,6 +41,7 @@ const NearestMarketList: React.FC<NearestMarketListProps> = ({allMarkets, onMark
                 <NearestMarketCard 
                   key={index} 
                   title={market.name} 
+                  city={market.city}
                   distance={`~${market.distance.toFixed(1)} KM`}
                   imageUrl="https://cms.patrika.com/wp-content/uploads/2018/03/30/bhamashah_mandi_gate_1.jpg"
                   handleClick={() => onMarketSelect(market._id)}
