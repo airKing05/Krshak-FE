@@ -30,7 +30,7 @@ const Card: React.FC<CardProps> = ({ imageUrl, title, subtitle, maxPrice, showWi
             {BgCard && <BgCard />}
 
             <div className="flex-1">
-                <Text variant="h3" className="text-lg font-semibold text-gray-900 truncate capitalize" >{title}</Text>
+                <Text variant="h3" className="text-lg font-semibold text-gray-900 capitalize" >{title}</Text>
                 {subtitle && <Text className="text-sm text-gray-500 mt-1 capitalize" >{subtitle}</Text>}
                 {maxPrice && <Text className="text-base text-green-600 font-semibold mt-2" >₹{maxPrice}</Text>}
                 {distance && <Text className="text-base text-green-600 font-semibold mt-2" >{distance}</Text>}

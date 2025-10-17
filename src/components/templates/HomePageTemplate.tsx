@@ -130,11 +130,11 @@ const HomePageTemplate: React.FC = () => {
 
 
     if(loading){
-        return <div>Loading...</div>
+        return <div className="text-center">Loading...</div>
     }
 
     if(error){
-        return <div>{error}</div>
+        return <div className="text-center">{error}</div>
     }
 
     return (

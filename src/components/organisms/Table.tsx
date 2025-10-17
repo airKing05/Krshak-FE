@@ -36,14 +36,13 @@ export const Table: React.FC<TableProps> = ({
   handleChangeFilters
 }) => {
 
-    console.log("table filters", filters)
   return (
     <div className="overflow-x-auto scrollbar-visible">
-      <div className="max-h-[40vh] overflow-y-auto border border-gray-500 rounded-md">
+      <div className="max-h-[50vh] overflow-y-auto border border-gray-500 rounded-md">
         <table className="w-full table-auto border-collapse text-sm bg-white">
           <thead className="sticky  top-0 bg-gray-50 z-20 text-gray-700">
             <tr>
-              <th className="sticky left-0 z-10 bg-gray-50 px-3 py-2 text-left font-semibold whitespace-nowrap">
+              <th className="sticky max-w-24 md:max-w-40 left-0 z-10 bg-gray-50 px-3 py-2 text-left font-semibold whitespace-nowrap">
                 Product
               </th>
               <th className="px-3 py-2 text-left font-semibold whitespace-nowrap">
@@ -72,7 +71,7 @@ export const Table: React.FC<TableProps> = ({
           <tbody className="divide-y divide-gray-200">
             {data.map((row, rowIndex) => (
               <tr key={rowIndex} className="hover:bg-gray-50">
-                <td className="sticky left-0 z-10 bg-white px-3 py-2 font-medium text-gray-900 whitespace-nowrap">
+                <td className="sticky max-w-24 md:max-w-40 left-0 z-10 bg-white px-3 py-2 font-medium text-gray-900 whitespace-wrap capitalize">
                   {row.name}
                 </td>
                 <td className="px-3 py-2 whitespace-nowrap">

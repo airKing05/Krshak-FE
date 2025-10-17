@@ -25,7 +25,9 @@ const imageObject: Record<string, string> = {
 }
 
 const chooseImage = (type: string): string => {
-  const matchedKey = Object.keys(imageObject).find(key => type.startsWith(key));
+  const matchedKey = Object.keys(imageObject).find(
+    key => type.toLowerCase().startsWith(key.toLowerCase())
+  );
   return matchedKey ? imageObject[matchedKey] : "";
 };
 
