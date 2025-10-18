@@ -1,3 +1,5 @@
+import Text from "../atoms/Text";
+
 // components/CurrentWeather.tsx
 type Props = {
   current: any;
@@ -17,14 +19,14 @@ const CurrentWeather = ({ current, daily }: Props) => {
   return (
     <div className={`p-6 ${bgClass}`}>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div>🌡️ Temp: {current.temperature}°C</div>
-        <div>💨 Wind: {current.windspeed} km/h</div>
+        <Text variant="h5">🌡️ Temp: {current.temperature}°C</Text>
+        <Text variant="h5">💨 Wind: {current.windspeed} km/h</Text>
         {/* <div>💧 Humidity: {current.humidity_2m}%</div> */}
-        <div>☁️ Fog: {current.fog ? 'Yes' : 'No'}</div>
-        <div>🌧️ Rain: {current.precipitation} mm</div>
-        <div>🌨️ Snow: {current.snowfall} mm</div>
-        <div>🌅 Sunrise: {daily.sunrise[0].split('T')[1]}</div>
-        <div>🌄 Sunset: {daily.sunset[0].split('T')[1]}</div>
+        <Text variant="h5">☁️ Fog: {current.fog ? 'Yes' : 'No'}</Text>
+        <Text variant="h5">🌧️ Rain: {current.precipitation} mm</Text>
+        <Text variant="h5">🌨️ Snow: {current.snowfall} mm</Text>
+        <Text variant="h5">🌅 Sunrise: {daily.sunrise[0].split('T')[1]}</Text>
+        <Text variant="h5">🌄 Sunset: {daily.sunset[0].split('T')[1]}</Text>
       </div>
     </div>
   );

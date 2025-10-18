@@ -60,7 +60,7 @@ const ProductList: React.FC<ProductListProps> = ({productsList}) => {
         <InfiniteScroll dataLength={products.length} next={fetchMoreData} hasMore={hasMore} loader={<p>Loading...</p>}>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-10">
                 {products.map((item) => (
-                   <React.Fragment key={item._id} >
+                   <React.Fragment key={item._id}>
                         <Card 
                             imageUrl={item.imgUrl}    //{productsImages[item.name]} 
                             title={item.name} 

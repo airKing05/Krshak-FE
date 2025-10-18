@@ -5,6 +5,7 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { getRainEmoji } from "../../utils/common";
 import { useResponsiveSlidePercentage } from "../../hooks/useResponsiveSlidePercentage";
+import Text from "../atoms/Text";
 
 type Props = {
   hourly: {
@@ -31,22 +32,22 @@ const HourlyForecastCarousel: React.FC<Props> = ({ hourly }) => {
         key={idx}
         className="bg-white border border-gray-200 shadow-sm rounded-xl py-4 px-0 w-full max-w-[110px] mx-auto"
       >
-        <div className="text-sm text-gray-500 text-center">{hour}</div>
-        <div className="text-xl font-semibold text-gray-800 mt-1 text-center">
+        <Text variant="h5" className="text-gray-500 text-center">{hour}</Text>
+        <Text variant="h5" className="text-xl font-semibold text-gray-800 mt-1 text-center">
           🌡️ {temp}°C
-        </div>
-        <div className="text-sm text-blue-600 mt-1 text-center">
+        </Text>
+        <Text variant="p" className="text-sm text-blue-600 mt-1 text-center">
           {getRainEmoji(rain)} {rain}% rain
-        </div>
+        </Text>
       </div>
     );
   });
 
   return (
     <div className="mt-8 px-4 sm:px-6 max-w-5xl mx-auto">
-      <h3 className="text-2xl font-semibold text-gray-800 mb-4">
+      <Text variant="h3" className="font-semibold text-gray-800 mb-4">
         Hourly Forecast
-      </h3>
+      </Text>
 
       <Carousel
         showThumbs={false}

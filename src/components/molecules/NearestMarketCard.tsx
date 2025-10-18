@@ -38,7 +38,7 @@ export default function NearestMarketCard({
 
   const bgCard = () => {
     return <div className="w-48 h-24 max-w-48 rounded-md bg-amber-100 flex justify-center items-center">
-      <Text className="capitalize">{city}</Text>
+      <Text variant="h3" className="capitalize">{city}</Text>
     </div>
   }
   return (

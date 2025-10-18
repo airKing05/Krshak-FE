@@ -161,7 +161,7 @@ const HomePageTemplate: React.FC = () => {
                 />
             </div>
 
-            <Text variant="h4" className="">Weather at <span className="capitalize">{selectedMarketDetails?.name}</span></Text>
+            <Text variant="h4">Weather at <span className="capitalize">{selectedMarketDetails?.name}</span></Text>
             <div className="flex overflow-x-auto p-4 space-x-4 custom-scrollbar justify-start"> {/* Added custom-scrollbar for better UX */}
                 {rainData.map((weather, index) => (
                     <WeatherCard
