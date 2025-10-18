@@ -36,10 +36,8 @@ const WeatherPage = () => {
   }, []);
 
   useEffect(() => {
-    const fetchWeather = async () => { 
+    const fetchWeather = async (lat: number, lng: number) => { 
       try {
-        const lat = userLocation?.lat;  //40.7128;
-        const lng = userLocation?.lng; //-74.0060;
         const data = await getWeatherData(lat, lng);
 
         // Find current hour index in hourly data
@@ -73,7 +71,12 @@ const WeatherPage = () => {
       }
     }
 
-    fetchWeather();
+    if(userLocation){
+      const lat = userLocation?.lat;  
+      const lng = userLocation?.lng;
+      fetchWeather(lat, lng);
+    }
+
   }, [userLocation]);
 
   if(error){
