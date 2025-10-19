@@ -7,7 +7,8 @@ import { getSingleProductDetail } from "../../services/productService";
 import { useParams } from "react-router-dom";
 import { getFromLocalStorage } from "../../utils/localStorage";
 import { formatISODateToDDMMYYYY } from "../../utils/common";
-import { Market, ProductDetailsType } from "../../types/common";
+import { Market, ProductDetailsType, User } from "../../types/common";
+import { deleteSingleMarketProduct } from "../../services/adminService";
 
 // const carousalData = [
 //     {
@@ -31,9 +32,12 @@ const formattedPriceDataForGraph = (price?: ProductDetailsType['price']) =>  pri
 const ProductPageTemplate: React.FC = () => {
     const { productId } = useParams<{ productId: string }>();
     const [productDetails, setProductDetails] = useState<ProductDetailsType | null>(null);
+    const user = getFromLocalStorage("user") as User | null;
+    const isAdmin = user?.role === "admin";
+    const marketDetails = getFromLocalStorage('marketDetails') as Market;
+
 
     const fetchSingleProductDetails = async () => {
-        const marketDetails = getFromLocalStorage('marketDetails') as Market;
         const res = await getSingleProductDetail(marketDetails._id, productId);
         setProductDetails(() => ({...res, market: marketDetails}));
     }
@@ -42,8 +46,14 @@ const ProductPageTemplate: React.FC = () => {
         fetchSingleProductDetails();
     }, [])
 
-    
-
+    const handleDeleteProduct = async () => {
+      try {
+        if(!productId) return;
+        await deleteSingleMarketProduct(marketDetails._id, productId);
+      } catch (error) {
+        console.error("Error:", error)
+      }
+    }
 
     return (
         <div className="p-4 space-y-4 pb-12 mb-12">
@@ -57,6 +67,8 @@ const ProductPageTemplate: React.FC = () => {
                 maxPrice="2800"
                 temperature="32"
                 rainChance="10"
+                handleDeleteProduct={handleDeleteProduct}
+                isAdmin={isAdmin}
             />
 
             {/* Other sections will be added later */}

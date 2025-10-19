@@ -1,6 +1,7 @@
 import React from "react";
 // import WeatherInfo from "../atoms/WeatherInfo";
 import Text from "../atoms/Text";
+import DeleteIcon from "../../assets/icons/delete.svg";
 
 interface ProductDetailsProps {
     marketName?: string;
@@ -11,6 +12,8 @@ interface ProductDetailsProps {
     maxPrice: string;
     temperature: string;
     rainChance: string;
+    handleDeleteProduct: () => void;
+    isAdmin: boolean;
 }
 
 const ProductDetails: React.FC<ProductDetailsProps> = ({
@@ -22,6 +25,8 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
     maxPrice,
     // temperature,
     // rainChance,
+    handleDeleteProduct,
+    isAdmin
 }) => {
     return (
         <div className=" bg-white shadow-md rounded-lg p-4">
@@ -31,6 +36,11 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
                     <Text variant="h1" className="text-3xl font-semibold capitalize">{productName}</Text>
                     <Text variant="h4" className="text-base text-gray-600 mt-1 capitalize">{category}</Text>
                     <Text variant="h4" className="text-xl font-bold text-green-600 mt-4">₹{minPrice} - ₹{maxPrice}</Text>
+                </div>
+                <div className="w-8 h-full">
+                    {
+                        isAdmin ? <img src={DeleteIcon} alt="icon" onClick={handleDeleteProduct}/> : null
+                    }
                 </div>
                 {/* <WeatherInfo temperature={temperature} rainChance={rainChance} /> */}
             </div>

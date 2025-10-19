@@ -1,7 +1,5 @@
 // src/services/adminService.ts
-import axios from "axios";
-
-const API = "https://krshak.onrender.com/api/v1" //"http://192.168.43.83:5001/api/v1";
+import apiClient from "../utils/apiClient";
 
 interface PriceData {
   productId: string
@@ -13,55 +11,60 @@ interface PriceData {
 // Markets
 export const createMarket = (data: any) =>{
   console.log("this is ", data)
-  return axios.post(`${API}/markets`, data);
+  return apiClient.post(`/markets`, data);
 }
 export const getAllMarkets = () =>
-  axios.get(`${API}/markets`).then((res) => res.data);
+  apiClient.get(`/markets`).then((res) => res.data);
 
 // Categories
 export const createCategory = (data: { name: string }) =>
-  axios.post(`${API}/categories`, data);
+  apiClient.post(`/categories`, data);
 
 export const getAllCategories = () =>
-  axios.get(`${API}/categories`).then((res) => res.data);
+  apiClient.get(`/categories`).then((res) => res.data);
 
 // Products
 export const createProduct = (data: { name: string, categoryId: string, images?: string[] }) =>
-  axios.post(`${API}/products`, data);
+  apiClient.post(`/products`, data);
 
 export const getAllProducts = () =>
-  axios.get(`${API}/products`).then((res) => res.data);
+  apiClient.get(`/products`).then((res) => res.data);
 
 // Prices
 export const createPrice = (data: PriceData) =>
-  axios.post(`${API}/prices`, data);
+  apiClient.post(`/prices`, data);
 
 export const getPricesByProduct = (productId: string) =>
-  axios.get(`${API}/prices/${productId}`).then((res) => res.data);
+  apiClient.get(`/prices/${productId}`).then((res) => res.data);
 
 // market-categories
 export const createMarketCategoriesLink = (data: { marketId: string, categoryId: string }) =>
-  axios.post(`${API}/market-categories`, data);
+  apiClient.post(`/market-categories`, data);
 
 export const getMarketCategoriesLink = () =>
-  axios.get(`${API}/market-categories`).then((res) => res.data);
+  apiClient.get(`/market-categories`).then((res) => res.data);
 
 // market-products
 export const createMarketProductsLink = (data: { marketId: string, categoryId: string, productId: string }) =>
-  axios.post(`${API}/market-products`, data);
+  apiClient.post(`/market-products`, data);
 
 export const getMarketProductsLink = () =>
-  axios.get(`${API}/market-products`).then((res) => res.data);
+  apiClient.get(`/market-products`).then((res) => res.data);
+
+export const deleteSingleMarketProduct = (marketId: string, productId?:string) =>
+  apiClient
+    .delete(`/market-products/${marketId}/product/${productId}`)
+    .then((res) => res.data);
 
 
 // login
 export const login = (email: string, password: string) => 
-  axios.post(`${API}/login`, { email, password }).then((res) => res.data);
+  apiClient.post(`/login`, { email, password }).then((res) => res.data);
 
 export const getUserInfo = (token: string) => {
 
-  return axios
-    .get(`${API}/user-info`, {
+  return apiClient
+    .get(`/user-info`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",

@@ -62,3 +62,8 @@ export interface DetailedProduct extends Product {
   imgUrl?: string;
   _id:string;
 }
+
+export interface User {
+  role: string;
+  email: string;
+}
