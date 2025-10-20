@@ -14,6 +14,7 @@ import WeatherCard from "../molecules/WeatherCard";
 import { getFallbackLocation, getUserLocation } from "../../utils/helper";
 import { getRainProbability7Days } from "../../services/weather";
 import { getDayByDate, getRainEmoji } from "../../utils/common";
+import SpinnerLoader from "../atoms/SpinnerLoader";
 
 const HomePageTemplate: React.FC = () => {
     const cityName = useCityName();
@@ -129,8 +130,8 @@ const HomePageTemplate: React.FC = () => {
     }, [selectedMarketDetails]);
 
 
-    if(loading){
-        return <div className="text-center">Loading...</div>
+    if (loading) {
+        return <SpinnerLoader fullScreen size="lg"/>;
     }
 
     if(error){

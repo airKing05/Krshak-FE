@@ -3,6 +3,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Card from "../molecules/Card";
 import { useNavigate } from "react-router-dom";
 import { DetailedProduct } from "../../types/common";
+import SpinnerLoader from "../atoms/SpinnerLoader";
+import Text from "../atoms/Text";
 
 
 // const productsImages: Record<string, string> = {
@@ -25,11 +27,17 @@ const ProductList: React.FC<ProductListProps> = ({productsList}) => {
 
     useEffect(() => {
         setProducts([...productsList])
+
+        // Stop loading if the list is empty
+        if (productsList.length === 0) {
+        setHasMore(false);
+        }
     }, [productsList]) 
 
     const navigate = useNavigate();
 
     const fetchMoreData = () => {
+        console.log("fetchMoreData", fetchMoreData)
         // TODO: Call api for infinite scrolling 
         // setTimeout(() => {
         //     setProducts((prev) => [
@@ -57,20 +65,31 @@ const ProductList: React.FC<ProductListProps> = ({productsList}) => {
     }
 
     return (
-        <InfiniteScroll dataLength={products.length} next={fetchMoreData} hasMore={hasMore} loader={<p>Loading...</p>}>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-10">
-                {products.map((item) => (
-                   <React.Fragment key={item._id}>
-                        <Card 
-                            imageUrl={item.imgUrl}    //{productsImages[item.name]} 
-                            title={item.name} 
-                            subtitle={item.category.name} 
-                            maxPrice={item.latestMaxPrice} 
-                            handleClick={() => handleProductClicked(item._id)}
-                        />
-                   </React.Fragment>
-                ))}
-            </div>
+        <InfiniteScroll
+            dataLength={products.length}
+            next={fetchMoreData}
+            hasMore={hasMore}
+            loader={<SpinnerLoader />}
+        >
+            {products.length === 0 && !hasMore ? (
+                <Text variant="p" className="text-center text-gray-500 py-6">
+                    No product found for this market categories combination.
+                </Text>
+            ) : (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-10">
+                    {products.map((item) => (
+                        <React.Fragment key={item._id}>
+                            <Card
+                                imageUrl={item.imgUrl}
+                                title={item.name}
+                                subtitle={item.category.name}
+                                maxPrice={item.latestMaxPrice}
+                                handleClick={() => handleProductClicked(item._id)}
+                            />
+                        </React.Fragment>
+                    ))}
+                </div>
+            )}
         </InfiniteScroll>
     );
 };

@@ -5,6 +5,7 @@ import CurrentWeather from '../components/organisms/CurrentWeather';
 import HourlyForecastCarousel from '../components/organisms/HourlyForecastCarousel';
 import DailyForecastAccordion from '../components/organisms/DailyForecastAccordion';
 import { getFallbackLocation, getUserLocation } from '../utils/helper';
+import SpinnerLoader from '../components/atoms/SpinnerLoader';
 
 const WeatherPage = () => {
   const [weather, setWeather] = useState<any>(null);
@@ -83,7 +84,7 @@ const WeatherPage = () => {
     return <div className="text-center mt-10 text-red-400">{error}</div>
   }
 
-  if (!weather) return <div className="text-center mt-10 text-gray-600">Loading...</div>;
+  if (!weather) return <SpinnerLoader fullScreen/>;
 
   return (
     <div className="min-h-screen bg-white text-gray-900">

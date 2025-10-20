@@ -7,7 +7,7 @@ import { getFromLocalStorage } from "../../utils/localStorage";
 import CustomSelect, { Option } from "../atoms/CustomSelect";
 import { debounce } from "../../utils/common";
 import { Market, DetailedProduct, ProductCategory } from "../../types/common";
-import Text from "../atoms/Text";
+
 
 const CategoryPageTemplate: React.FC = () => {
     const params = useParams();
@@ -77,10 +77,6 @@ const CategoryPageTemplate: React.FC = () => {
 
             {/* Product List */}
             <ProductList productsList={productsList}/>
-
-            {
-               productsList.length <=0 ? <Text variant="p">No product found for this market categories combination</Text> : null
-            }
         </div>
     );
 };
