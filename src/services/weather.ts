@@ -4,16 +4,16 @@
 export async function getRainProbability7Days(
   lat: number,
   lng: number
-): Promise<Array<{ date: string; rainChance: number }>> {
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&daily=precipitation_probability_max&timezone=auto`;
+): Promise<Array<{ date: string; rainChance: number; rainAmount: number }>> {
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&daily=precipitation_probability_max,rain_sum&timezone=auto`;
 
   const res = await fetch(url);
   const data = await res.json();
 
-
   return data.daily.time.map((date: string, index: number) => ({
     date,
     rainChance: data.daily.precipitation_probability_max[index],
+    rainAmount: data.daily.rain_sum[index], // rain only, in mm
   }));
 }
 

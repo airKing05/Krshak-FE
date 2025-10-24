@@ -35,7 +35,7 @@ const HomePageTemplate: React.FC = () => {
         lng: 0
     });
     const [loading, setLoading] = useState(false);
-    const [rainData, setRainData] = useState<Array<{ date: string; rainChance: number }>>([]);
+    const [rainData, setRainData] = useState<Array<{ date: string; rainChance: number, rainAmount: number }>>([]);
     const [error, setError] = useState<string | null>(null);
 
     // const typedInputMarket = useRef("");
@@ -170,6 +170,7 @@ const HomePageTemplate: React.FC = () => {
                         day={getDayByDate(weather.date)}
                         icon={getRainEmoji(weather.rainChance)}
                         rainChance={weather.rainChance + '%'}
+                        rainAmount={weather.rainAmount + 'mm'}
                     />
                 ))}
             </div>
